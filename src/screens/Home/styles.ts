@@ -7,7 +7,7 @@ export const SearchBar = styled.View`
   align-items: center;
   padding: 8px 16px;
   background-color: transparent;
-  border: 1px solid ${theme.colors.gray[300]};
+  border: 1px solid ${theme.colors.gray[500]};
   border-radius: 50px;
   width: 80%;
   margin: auto;
@@ -15,7 +15,7 @@ export const SearchBar = styled.View`
 `;
 
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: theme.colors.gray[300],
+  placeholderTextColor: theme.colors.gray[500],
 })`
   width: 100%;
   height: 32px;

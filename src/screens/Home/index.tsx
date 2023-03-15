@@ -11,17 +11,17 @@ import { AddEmployee, Input, List, SearchBar, TextButton } from './styles';
 const Home = () => {
   const navigation = useNavigation();
 
-  const handleAddEmplyee = useCallback(() => {
+  const handleAddEmployee = useCallback(() => {
     navigation.navigate('register');
   }, [navigation]);
 
   return (
     <DefaultScreen>
       <SearchBar>
-        <Search color={theme.colors.gray[300]} strokeWidth={1.3} />
+        <Search color={theme.colors.gray[500]} strokeWidth={1.3} />
         <Input placeholder="Buscar pelo nome, email..." />
       </SearchBar>
-      <AddEmployee onPress={handleAddEmplyee}>
+      <AddEmployee onPress={handleAddEmployee}>
         <Plus color={theme.colors.gray[100]} strokeWidth={1.5} />
         <TextButton>Adiconar funcionário</TextButton>
       </AddEmployee>
