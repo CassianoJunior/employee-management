@@ -9,4 +9,5 @@ export const Container = styled.SafeAreaView`
   height: 100%;
   background-color: ${theme.colors.zinc[800]};
   padding-top: 16px;
+  align-items: center;
 `;
