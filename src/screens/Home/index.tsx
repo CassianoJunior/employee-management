@@ -23,7 +23,7 @@ const Home = () => {
       </SearchBar>
       <AddEmployee onPress={handleAddEmployee}>
         <Plus color={theme.colors.gray[100]} strokeWidth={1.5} />
-        <TextButton>Adiconar funcionário</TextButton>
+        <TextButton>Adicionar funcionário</TextButton>
       </AddEmployee>
       <ScrollView>
         <List>
@@ -32,6 +32,10 @@ const Home = () => {
               key={employee.id}
               name={employee.name}
               email={employee.email}
+              profilePicture={employee.profilePicture}
+              onPress={() =>
+                navigation.navigate('details', { id: employee.id })
+              }
             />
           ))}
         </List>

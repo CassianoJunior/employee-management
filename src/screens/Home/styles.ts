@@ -30,7 +30,7 @@ export const AddEmployee = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   padding: 8px 16px;
-  background-color: ${theme.colors.zinc[900]};
+  background-color: transparent;
   border-radius: 50px;
   width: 80%;
   margin: 32px auto 8px;

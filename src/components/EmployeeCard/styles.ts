@@ -8,7 +8,7 @@ export const Container = styled.TouchableOpacity`
   gap: 16px;
   width: 48%;
   padding: 24px 12px;
-  background-color: ${theme.colors.zinc[900]};
+  background-color: ${theme.colors.purple[500]};
   border-radius: 8px;
   height: 176px;
   margin: 8px 0;
@@ -31,5 +31,5 @@ export const Email = styled.Text`
   font-size: 12px;
   width: 100%;
   text-align: center;
-  color: ${theme.colors.gray[500]};
+  color: ${theme.colors.gray[100]};
 `;

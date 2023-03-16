@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { Details } from '../screens/Details';
+import { EmployeeBadge } from '../screens/EmployeeBadge';
 import { Home } from '../screens/Home';
 import { Register } from '../screens/Register';
 import theme from '../theme';
@@ -12,7 +12,7 @@ const AppRoutes = () => {
       initialRouteName="home"
       screenOptions={{
         headerStyle: {
-          backgroundColor: theme.colors.zinc[800],
+          backgroundColor: theme.colors.purple[700],
           borderBottomWidth: 0,
         },
         headerTintColor: theme.colors.gray[100],
@@ -36,13 +36,7 @@ const AppRoutes = () => {
           title: 'Cadastrar funcionário',
         }}
       />
-      <Stack.Screen
-        name="details"
-        component={Details}
-        options={{
-          title: 'Detalhes',
-        }}
-      />
+      <Stack.Screen name="details" component={EmployeeBadge} />
     </Stack.Navigator>
   );
 };

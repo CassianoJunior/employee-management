@@ -1,6 +1,11 @@
+import { Camera } from 'expo-camera';
 import { TextInputMask } from 'react-native-masked-text';
 import styled from 'styled-components/native';
 import theme from '../../theme';
+
+interface PictureSectionProps {
+  bgColor: boolean;
+}
 
 export const Container = styled.View`
   height: 100%;
@@ -15,10 +20,10 @@ export const PictureSection = styled.View`
   height: 132px;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.colors.purple[100]};
+  background-color: ${({ bgColor }: PictureSectionProps) =>
+    !bgColor ? theme.colors.purple[100] : 'transparent'};
   border-radius: 132px;
   position: relative;
-  border: 2px solid ${theme.colors.purple[800]};
 `;
 
 export const ChangePictureButton = styled.TouchableOpacity`
@@ -77,4 +82,23 @@ export const ErrorMessage = styled.Text`
   font-size: 12px;
   font-weight: bold;
   position: absolute;
+`;
+
+export const CameraSection = styled.View`
+  width: 132px;
+  height: 132px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 132px;
+  position: relative;
+  overflow: hidden;
+`;
+
+export const CameraComponent = styled(Camera)`
+  width: 132px;
+  height: 132px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 132px;
+  position: relative;
 `;

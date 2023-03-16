@@ -7,7 +7,7 @@ export const Container = styled.SafeAreaView`
   flex: 1;
   width: 100%;
   height: 100%;
-  background-color: ${theme.colors.zinc[800]};
-  padding-top: 16px;
+  background-color: ${theme.colors.purple[700]};
+  padding: 16px 0 32px;
   align-items: center;
 `;

@@ -1,31 +1,41 @@
 import styled from 'styled-components/native';
 import theme from '../../theme';
 
+interface ImageSectionProps {
+  size?: number;
+}
 interface ImageProps {
   size?: number;
-  source: string;
-  color?: string;
+  source: { uri: string };
+  color: string;
 }
 interface WithoutImageProps {
   size?: number;
   color?: string;
 }
 
+export const ImageSection = styled.View`
+  width: ${(props: ImageSectionProps) => props.size}px;
+  height: ${(props: ImageSectionProps) => props.size}px;
+  border-radius: ${(props: ImageSectionProps) => props.size}px;
+  border: 2px solid ${theme.colors.purple[900]};
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+`;
+
 export const Image = styled.Image`
-  width: ${({ size }: ImageProps) => size}px;
-  height: ${({ size }: ImageProps) => size}px;
-  border-radius: ${({ size }: ImageProps) => size}px;
-  border: 1px solid
-    ${({ color }: ImageProps) => color || theme.colors.gray[100]};
+  width: ${({ size = 68 }: ImageProps) => size}px;
+  height: ${({ size = 68 }: ImageProps) => size}px;
   align-items: center;
   justify-content: center;
 `;
 
 export const WithoutImage = styled.View`
-  width: ${({ size }: WithoutImageProps) => size}px;
-  height: ${({ size }: WithoutImageProps) => size}px;
-  border-radius: ${({ size }: WithoutImageProps) => size}px;
-  border: 1px solid ${theme.colors.gray[300]};
+  width: ${({ size = 50 }: WithoutImageProps) => size}px;
+  height: ${({ size = 50 }: WithoutImageProps) => size}px;
+  border-radius: ${({ size = 50 }: WithoutImageProps) => size}px;
+  border: 2px solid ${theme.colors.gray[300]};
   align-items: center;
   justify-content: center;
 `;
