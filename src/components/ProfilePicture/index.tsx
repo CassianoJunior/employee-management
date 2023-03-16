@@ -3,7 +3,7 @@ import theme from '../../theme';
 import { Image, ImageSection, WithoutImage } from './styles';
 
 interface ProfilePictureProps {
-  source?: string;
+  source?: string | null;
   size?: number;
   color: string;
 }

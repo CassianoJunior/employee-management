@@ -23,7 +23,14 @@ import {
   SubmitButton,
 } from './styles';
 
+import { useNavigation } from '@react-navigation/native';
+import { showMessage } from 'react-native-flash-message';
+
 import { ScrollView } from 'react-native';
+import {
+  EmployeeProps,
+  useEmployeeContext,
+} from '../../contexts/EmployeeContext';
 
 type FormData = {
   name: string;
@@ -48,6 +55,10 @@ const Register = () => {
     formState: { errors },
     setError,
   } = useForm<FormData>();
+
+  const { addEmployee } = useEmployeeContext();
+
+  const navigation = useNavigation();
 
   const handleChangePicture = async () => {
     const { status: cameraStatus } = await Camera.getCameraPermissionsAsync();
@@ -201,8 +212,42 @@ const Register = () => {
     }
   };
 
-  const handleRegisterEmployee = (data: FormData) => {
-    console.log(data);
+  const formatPhoneNumber = (number: string) => {
+    return number.replace(/\D/g, '');
+  };
+
+  const formatSalary = (salary: string) => {
+    return Number(salary.replace('R$', '').replace(',', '.'));
+  };
+
+  const handleRegisterEmployee = ({
+    name,
+    email,
+    jobTitle,
+    phoneNumber,
+    salary,
+  }: FormData) => {
+    const employee: EmployeeProps = {
+      name,
+      email,
+      jobTitle,
+      phoneNumber: formatPhoneNumber(phoneNumber),
+      salary: formatSalary(salary),
+      profilePicture: imageBase64 || undefined,
+      id: '',
+    };
+
+    addEmployee(employee);
+    navigation.goBack();
+    showMessage({
+      message: 'Funcionário cadastrado com sucesso!',
+      type: 'success',
+      backgroundColor: theme.colors.teal[400],
+      floating: true,
+      titleStyle: {
+        textAlign: 'center',
+      },
+    });
   };
 
   return (
@@ -256,7 +301,6 @@ const Register = () => {
                     value={value}
                     error={!!errors.name}
                     onEndEditing={() => assertField('name')}
-                    autoFocus
                   />
                 )}
               />
@@ -284,6 +328,8 @@ const Register = () => {
                     value={value}
                     error={!!errors.email}
                     onEndEditing={() => assertField('email')}
+                    autoCapitalize="none"
+                    keyboardType="email-address"
                   />
                 )}
               />

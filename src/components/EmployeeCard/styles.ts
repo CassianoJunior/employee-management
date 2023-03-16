@@ -1,17 +1,23 @@
+import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 import theme from '../../theme';
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled(Animated.View)`
+  width: 48%;
+  height: 176px;
+  background-color: ${theme.colors.purple[500]};
+  padding: 24px 12px;
+  border-radius: 8px;
+  margin: 8px 0;
+`;
+
+export const TouchableArea = styled.TouchableOpacity`
+  width: 100%;
+  height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  width: 48%;
-  padding: 24px 12px;
-  background-color: ${theme.colors.purple[500]};
-  border-radius: 8px;
-  height: 176px;
-  margin: 8px 0;
 `;
 
 export const Info = styled.View`

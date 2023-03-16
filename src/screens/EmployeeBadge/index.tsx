@@ -16,12 +16,12 @@ import {
   InfoText,
 } from './styles';
 
-import data from '../../../assets/MOCK_DATA.json';
 import { DefaultScreen } from '../../components/DefaultScreen';
 import { ProfilePicture } from '../../components/ProfilePicture';
+import { useEmployeeContext } from '../../contexts/EmployeeContext';
 
 interface EmployeeBadgeProps {
-  id: number;
+  id: string;
 }
 
 const EmployeeBadge = () => {
@@ -29,7 +29,9 @@ const EmployeeBadge = () => {
   const route = useRoute();
   const { id } = route.params as EmployeeBadgeProps;
 
-  const employee = data.find((employee) => employee.id === id);
+  const { getEmployee } = useEmployeeContext();
+
+  const employee = getEmployee(id);
 
   useLayoutEffect(() => {
     navigation.setOptions({

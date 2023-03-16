@@ -58,6 +58,7 @@ export const Input = styled.TextInput`
   border-radius: 8px;
   ${(props: InputProps) =>
     props.error && `border: 2px solid ${theme.colors.red[400]};`}
+
   padding: 12px 16px;
   font-size: 16px;
   position: relative;
