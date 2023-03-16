@@ -7,6 +7,10 @@ interface PictureSectionProps {
   bgColor: boolean;
 }
 
+interface InputProps {
+  error: boolean;
+}
+
 export const Container = styled.View`
   height: 100%;
   width: 100%;
@@ -43,10 +47,17 @@ export const Form = styled.View`
   gap: 24px;
 `;
 
+export const InputSection = styled.View`
+  width: 100%;
+  position: relative;
+`;
+
 export const Input = styled.TextInput`
   width: 100%;
   background-color: ${theme.colors.purple[100]};
   border-radius: 8px;
+  ${(props: InputProps) =>
+    props.error && `border: 2px solid ${theme.colors.red[400]};`}
   padding: 12px 16px;
   font-size: 16px;
   position: relative;
@@ -56,6 +67,8 @@ export const InputMask = styled(TextInputMask)`
   width: 100%;
   background-color: ${theme.colors.purple[100]};
   border-radius: 8px;
+  ${(props: InputProps) =>
+    props.error && `border: 2px solid ${theme.colors.red[400]};`}
   padding: 12px 16px;
   font-size: 16px;
   position: relative;
@@ -79,9 +92,10 @@ export const ButtonText = styled.Text`
 
 export const ErrorMessage = styled.Text`
   color: ${theme.colors.red[400]};
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 16px;
   position: absolute;
+  bottom: -20px;
+  left: 8px;
 `;
 
 export const CameraSection = styled.View`

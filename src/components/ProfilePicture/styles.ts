@@ -3,11 +3,11 @@ import theme from '../../theme';
 
 interface ImageSectionProps {
   size?: number;
+  borderColor: string;
 }
 interface ImageProps {
   size?: number;
   source: { uri: string };
-  color: string;
 }
 interface WithoutImageProps {
   size?: number;
@@ -18,7 +18,7 @@ export const ImageSection = styled.View`
   width: ${(props: ImageSectionProps) => props.size}px;
   height: ${(props: ImageSectionProps) => props.size}px;
   border-radius: ${(props: ImageSectionProps) => props.size}px;
-  border: 2px solid ${theme.colors.purple[900]};
+  border: 2px solid ${(props: ImageSectionProps) => props.borderColor};
   align-items: center;
   justify-content: center;
   overflow: hidden;

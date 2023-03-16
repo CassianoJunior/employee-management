@@ -10,13 +10,8 @@ interface ProfilePictureProps {
 
 const ProfilePicture = ({ source, size, color }: ProfilePictureProps) => {
   return source ? (
-    <ImageSection size={size}>
-      <Image
-        source={{ uri: source }}
-        size={size}
-        color={color}
-        alt="Profile picture"
-      />
+    <ImageSection size={size} borderColor={color}>
+      <Image source={{ uri: source }} size={size} alt="Profile picture" />
     </ImageSection>
   ) : (
     <WithoutImage size={size} color={color}>

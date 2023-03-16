@@ -20,5 +20,8 @@ export default {
     red: {
       400: '#f87171',
     },
+    teal: {
+      '400': '#2dd4bf',
+    },
   },
 };
