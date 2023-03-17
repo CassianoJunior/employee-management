@@ -1,35 +1,24 @@
-import { Camera, CameraType } from 'expo-camera';
-import * as ImagePicker from 'expo-image-picker';
-import { SwitchCamera, User, XCircle } from 'lucide-react-native';
-import { useCallback, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Alert } from 'react-native';
 import z from 'zod';
 import { DefaultScreen } from '../../components/DefaultScreen';
-import { ProfilePicture } from '../../components/ProfilePicture';
 import theme from '../../theme';
 import {
   ButtonText,
-  CameraComponent,
-  CameraSection,
-  ChangePictureButton,
-  CloseCameraButton,
   Container,
   ErrorMessage,
   Form,
   Input,
   InputMask,
   InputSection,
-  PictureSection,
   SubmitButton,
-  TakePictureButton,
 } from './styles';
 
 import { useNavigation } from '@react-navigation/native';
 import { showMessage } from 'react-native-flash-message';
 
 import { ScrollView } from 'react-native';
-import { Modal, Portal } from 'react-native-paper';
+import { PicturePicker } from '../../components/PicturePicker';
 import {
   EmployeeProps,
   useEmployeeContext,
@@ -44,13 +33,10 @@ type FormData = {
 };
 
 const RegisterEmployee = () => {
-  const [imageUri, setImageUri] = useState<string | undefined>(undefined);
   const [imageBase64, setImageBase64] = useState<string | undefined | null>(
     undefined
   );
   const [usingCamera, setUsingCamera] = useState<boolean>(false);
-
-  const cameraRef = useRef<Camera>(null);
 
   const {
     control,
@@ -62,99 +48,6 @@ const RegisterEmployee = () => {
   const { addEmployee } = useEmployeeContext();
 
   const navigation = useNavigation();
-
-  const handleChangePicture = async () => {
-    const { status: cameraStatus } = await Camera.getCameraPermissionsAsync();
-    const { status: mediaLibraryStatus } =
-      await ImagePicker.getMediaLibraryPermissionsAsync();
-
-    if (cameraStatus !== 'granted' || mediaLibraryStatus !== 'granted') {
-      alert('Precisamos de acesso a sua câmera e galeria para continuar!');
-      await getPermissions();
-      return;
-    }
-
-    Alert.alert(
-      'Escolha uma opção',
-      'Selecione de onde você quer escolher a foto',
-      [
-        {
-          text: 'Cancelar',
-          style: 'cancel',
-        },
-        {
-          text: 'Câmera',
-          onPress: () => handleLaunchCamera(),
-        },
-        {
-          text: 'Galeria',
-          onPress: () => handleLaunchImageLibrary(mediaLibraryStatus),
-        },
-      ]
-    );
-  };
-
-  const handleLaunchCamera = useCallback(() => {
-    setUsingCamera(true);
-  }, [setUsingCamera]);
-
-  const handleTakePicture = async () => {
-    if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync({
-        base64: true,
-      });
-
-      if (photo) {
-        setImageUri(photo.uri);
-        setImageBase64(`data:image/jpg;base64,${photo.base64}`);
-      }
-    }
-
-    setUsingCamera(false);
-  };
-
-  const handleLaunchImageLibrary = async (
-    status: ImagePicker.PermissionStatus
-  ) => {
-    if (status === 'granted') {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        aspect: [4, 3],
-        quality: 1,
-        allowsMultipleSelection: false,
-        base64: true,
-      });
-
-      if (!result.canceled) {
-        if (result.assets) {
-          setImageUri(result.assets[0].uri);
-          setImageBase64(`data:image/jpg;base64,${result.assets[0].base64}`);
-        }
-      }
-    }
-  };
-
-  const getPermissions = async () => {
-    const { status: cameraStatus } =
-      await Camera.requestCameraPermissionsAsync();
-    const { status: mediaLibraryStatus } =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (cameraStatus !== 'granted' || mediaLibraryStatus !== 'granted') {
-      const { status: newCameraStatus } =
-        await ImagePicker.requestCameraPermissionsAsync();
-
-      const { status: newMediaLibraryStatus } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-      if (
-        newCameraStatus !== 'granted' ||
-        newMediaLibraryStatus !== 'granted'
-      ) {
-        alert('Precisamos de acesso a sua câmera e arquivos para continuar!');
-      }
-    }
-  };
 
   const assertField = (field: keyof FormData) => {
     if (!errors[field]) {
@@ -224,7 +117,6 @@ const RegisterEmployee = () => {
   };
 
   const formatSalary = (salary: string) => {
-    console.log(salary);
     return Number(salary.replace('R$', '').replace(',', '.'));
   };
 
@@ -261,43 +153,7 @@ const RegisterEmployee = () => {
   return (
     <DefaultScreen>
       <Container>
-        {usingCamera ? (
-          <Portal>
-            <Modal
-              visible={usingCamera}
-              onDismiss={() => setUsingCamera(false)}
-            >
-              <CameraSection>
-                <CloseCameraButton onPress={() => setUsingCamera(false)}>
-                  <XCircle color={theme.colors.gray[100]} size={32} />
-                </CloseCameraButton>
-                <CameraComponent ref={cameraRef} type={CameraType.front} />
-                <TakePictureButton
-                  onPress={handleTakePicture}
-                ></TakePictureButton>
-              </CameraSection>
-            </Modal>
-          </Portal>
-        ) : (
-          <PictureSection bgColor={!!imageUri}>
-            {imageBase64 ? (
-              <ProfilePicture
-                source={imageBase64}
-                size={128}
-                color={theme.colors.purple[700]}
-              />
-            ) : (
-              <User color={theme.colors.zinc[800]} size={112} strokeWidth={1} />
-            )}
-            <ChangePictureButton onPress={handleChangePicture}>
-              <SwitchCamera
-                color={theme.colors.gray[100]}
-                size={24}
-                strokeWidth={2}
-              />
-            </ChangePictureButton>
-          </PictureSection>
-        )}
+        <PicturePicker />
         <ScrollView style={{ width: '100%' }}>
           <Form>
             <InputSection>

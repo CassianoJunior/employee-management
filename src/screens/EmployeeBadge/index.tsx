@@ -32,6 +32,7 @@ import {
 import { showMessage } from 'react-native-flash-message';
 import { DefaultScreen } from '../../components/DefaultScreen';
 import { Loading } from '../../components/Loading';
+import { PicturePicker } from '../../components/PicturePicker';
 import { ProfilePicture } from '../../components/ProfilePicture';
 import {
   EmployeeProps,
@@ -53,6 +54,12 @@ const EmployeeBadge = () => {
   const [employee, setEmployee] = useState<EmployeeProps | undefined>(
     undefined
   );
+
+  const [imageBase64, setImageBase64] = useState<string | null | undefined>(
+    undefined
+  );
+
+  const [usingCamera, setUsingCamera] = useState(false);
 
   const handleUpdateEmployee = () => {
     if (employee) {
@@ -117,12 +124,15 @@ const EmployeeBadge = () => {
           </RightButtonIcon>
           <BadgeHole />
           <BadgeCircle />
-          <ProfilePicture
-            source={employee?.profilePicture}
-            size={136}
-            color={theme.colors.gray[100]}
-          />
-
+          {isEditing ? (
+            <PicturePicker />
+          ) : (
+            <ProfilePicture
+              source={employee?.profilePicture}
+              size={136}
+              color={theme.colors.gray[100]}
+            />
+          )}
           <BadgeContent>
             <BadgeHeader>
               {isEditing ? (

@@ -1,11 +1,6 @@
-import { Camera } from 'expo-camera';
 import { TextInputMask } from 'react-native-masked-text';
 import styled from 'styled-components/native';
 import theme from '../../theme';
-
-interface PictureSectionProps {
-  bgColor: boolean;
-}
 
 interface InputProps {
   error: boolean;
@@ -18,27 +13,6 @@ export const Container = styled.View`
   justify-content: center;
   gap: 32px;
   position: relative;
-`;
-
-export const PictureSection = styled.View`
-  width: 132px;
-  height: 132px;
-  align-items: center;
-  justify-content: center;
-  background-color: ${({ bgColor }: PictureSectionProps) =>
-    !bgColor ? theme.colors.purple[100] : 'transparent'};
-  border-radius: 132px;
-  position: relative;
-`;
-
-export const ChangePictureButton = styled.TouchableOpacity`
-  position: absolute;
-  bottom: -8px;
-  right: -8px;
-  width: 32px;
-  height: 32px;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const Form = styled.View`
@@ -103,46 +77,4 @@ export const ErrorMessage = styled.Text`
   position: absolute;
   bottom: -20px;
   left: 8px;
-`;
-
-export const CameraSection = styled.View`
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  left: 0;
-  background-color: red;
-  z-index: 10;
-  overflow: hidden;
-`;
-
-export const CameraComponent = styled(Camera)`
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const CloseCameraButton = styled.TouchableOpacity`
-  width: 32px;
-  height: 32px;
-  border-radius: 32px;
-  background-color: transparent;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 10;
-`;
-
-export const TakePictureButton = styled.TouchableOpacity`
-  width: 64px;
-  height: 64px;
-  border-radius: 64px;
-  background-color: ${theme.colors.gray[100]};
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 32px;
 `;
