@@ -64,6 +64,7 @@ const EmployeeContextProvider = ({
   };
 
   const addEmployee = (employee: EmployeeProps) => {
+    console.log(employee);
     const newEmployee = {
       ...employee,
       id: generateId(),

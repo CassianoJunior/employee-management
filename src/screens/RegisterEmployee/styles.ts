@@ -17,6 +17,7 @@ export const Container = styled.View`
   align-items: center;
   justify-content: center;
   gap: 32px;
+  position: relative;
 `;
 
 export const PictureSection = styled.View`
@@ -105,20 +106,43 @@ export const ErrorMessage = styled.Text`
 `;
 
 export const CameraSection = styled.View`
-  width: 132px;
-  height: 132px;
+  width: 100%;
+  height: 100%;
   align-items: center;
   justify-content: center;
-  border-radius: 132px;
-  position: relative;
+  left: 0;
+  background-color: red;
+  z-index: 10;
   overflow: hidden;
 `;
 
 export const CameraComponent = styled(Camera)`
-  width: 132px;
-  height: 132px;
+  width: 100%;
+  height: 100%;
   align-items: center;
   justify-content: center;
-  border-radius: 132px;
-  position: relative;
+`;
+
+export const CloseCameraButton = styled.TouchableOpacity`
+  width: 32px;
+  height: 32px;
+  border-radius: 32px;
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+`;
+
+export const TakePictureButton = styled.TouchableOpacity`
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  background-color: ${theme.colors.gray[100]};
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 32px;
 `;

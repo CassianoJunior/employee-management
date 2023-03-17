@@ -1,6 +1,6 @@
 import { Camera, CameraType } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
-import { SwitchCamera, User } from 'lucide-react-native';
+import { SwitchCamera, User, XCircle } from 'lucide-react-native';
 import { useCallback, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
@@ -13,6 +13,7 @@ import {
   CameraComponent,
   CameraSection,
   ChangePictureButton,
+  CloseCameraButton,
   Container,
   ErrorMessage,
   Form,
@@ -21,12 +22,14 @@ import {
   InputSection,
   PictureSection,
   SubmitButton,
+  TakePictureButton,
 } from './styles';
 
 import { useNavigation } from '@react-navigation/native';
 import { showMessage } from 'react-native-flash-message';
 
 import { ScrollView } from 'react-native';
+import { Modal, Portal } from 'react-native-paper';
 import {
   EmployeeProps,
   useEmployeeContext,
@@ -40,7 +43,7 @@ type FormData = {
   salary: string;
 };
 
-const Register = () => {
+const RegisterEmployee = () => {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined);
   const [imageBase64, setImageBase64] = useState<string | undefined | null>(
     undefined
@@ -221,6 +224,7 @@ const Register = () => {
   };
 
   const formatSalary = (salary: string) => {
+    console.log(salary);
     return Number(salary.replace('R$', '').replace(',', '.'));
   };
 
@@ -258,9 +262,22 @@ const Register = () => {
     <DefaultScreen>
       <Container>
         {usingCamera ? (
-          <CameraSection>
-            <CameraComponent ref={cameraRef} type={CameraType.front} />
-          </CameraSection>
+          <Portal>
+            <Modal
+              visible={usingCamera}
+              onDismiss={() => setUsingCamera(false)}
+            >
+              <CameraSection>
+                <CloseCameraButton onPress={() => setUsingCamera(false)}>
+                  <XCircle color={theme.colors.gray[100]} size={32} />
+                </CloseCameraButton>
+                <CameraComponent ref={cameraRef} type={CameraType.front} />
+                <TakePictureButton
+                  onPress={handleTakePicture}
+                ></TakePictureButton>
+              </CameraSection>
+            </Modal>
+          </Portal>
         ) : (
           <PictureSection bgColor={!!imageUri}>
             {imageBase64 ? (
@@ -331,7 +348,7 @@ const Register = () => {
                     onChangeText={onChange}
                     value={value}
                     error={!!errors.email}
-                    onEndEditing={() => assertField('email')}
+                    onPressIn={() => assertField('email')}
                     autoCapitalize="none"
                     keyboardType="email-address"
                   />
@@ -367,7 +384,7 @@ const Register = () => {
                     onChangeText={onChange}
                     value={value}
                     error={!!errors.phoneNumber}
-                    onEndEditing={() => assertField('phoneNumber')}
+                    onPressIn={() => assertField('phoneNumber')}
                   />
                 )}
               />
@@ -384,7 +401,7 @@ const Register = () => {
                     onChangeText={onChange}
                     value={value}
                     error={!!errors.jobTitle}
-                    onEndEditing={() => assertField('jobTitle')}
+                    onPressIn={() => assertField('jobTitle')}
                   />
                 )}
               />
@@ -409,31 +426,25 @@ const Register = () => {
                     }}
                     keyboardType="numeric"
                     error={!!errors.salary}
-                    onEndEditing={() => assertField('salary')}
+                    onPressIn={() => assertField('salary')}
                   />
                 )}
               />
               {<ErrorMessage>{errors.salary?.message}</ErrorMessage>}
             </InputSection>
 
-            {usingCamera ? (
-              <SubmitButton onPress={handleTakePicture}>
-                <ButtonText>Tirar foto</ButtonText>
-              </SubmitButton>
-            ) : (
-              <SubmitButton
-                onPress={() => {
-                  assertField('name');
-                  assertField('email');
-                  assertField('phoneNumber');
-                  assertField('jobTitle');
-                  assertField('salary');
-                  handleSubmit(handleRegisterEmployee)();
-                }}
-              >
-                <ButtonText>Cadastrar</ButtonText>
-              </SubmitButton>
-            )}
+            <SubmitButton
+              onPress={() => {
+                assertField('name');
+                assertField('email');
+                assertField('phoneNumber');
+                assertField('jobTitle');
+                assertField('salary');
+                handleSubmit(handleRegisterEmployee)();
+              }}
+            >
+              <ButtonText>Cadastrar</ButtonText>
+            </SubmitButton>
           </Form>
         </ScrollView>
       </Container>
@@ -441,4 +452,4 @@ const Register = () => {
   );
 };
 
-export { Register };
+export { RegisterEmployee };

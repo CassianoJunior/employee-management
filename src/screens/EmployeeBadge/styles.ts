@@ -1,3 +1,4 @@
+import { TextInputMask } from 'react-native-masked-text';
 import styled from 'styled-components/native';
 import theme from '../../theme';
 
@@ -13,6 +14,7 @@ export const Badge = styled.View`
   z-index: 0;
   gap: 32px;
   padding: 112px 0 32px;
+  margin: 0 auto;
 `;
 
 export const BadgeHole = styled.View`
@@ -33,7 +35,14 @@ export const BadgeCircle = styled.View`
   bottom: -268px; // 536 / 2
 `;
 
-export const EditIcon = styled.TouchableOpacity`
+export const LeftButtonIcon = styled.TouchableOpacity`
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+`;
+
+export const RightButtonIcon = styled.TouchableOpacity`
   position: absolute;
   top: 8px;
   right: 8px;
@@ -61,7 +70,20 @@ export const BadgeName = styled.Text`
   font-family: ${theme.fonts.heading};
 `;
 
+export const BadgeNameInput = styled.TextInput`
+  font-size: 32px;
+  font-weight: bold;
+  color: ${theme.colors.purple[900]};
+  font-family: ${theme.fonts.heading};
+`;
+
 export const BadgeJobTitle = styled.Text`
+  color: ${theme.colors.gray[500]};
+  font-size: 24px;
+  font-family: ${theme.fonts.text};
+`;
+
+export const BadgeJobTitleInput = styled.TextInput`
   color: ${theme.colors.gray[500]};
   font-size: 24px;
   font-family: ${theme.fonts.text};
@@ -80,6 +102,18 @@ export const InfoItem = styled.View`
 `;
 
 export const InfoText = styled.Text`
+  font-size: 16px;
+  color: ${theme.colors.purple[900]};
+  font-family: ${theme.fonts.text};
+`;
+
+export const InfoInput = styled.TextInput`
+  font-size: 16px;
+  color: ${theme.colors.purple[900]};
+  font-family: ${theme.fonts.text};
+`;
+
+export const InfoInputMask = styled(TextInputMask)`
   font-size: 16px;
   color: ${theme.colors.purple[900]};
   font-family: ${theme.fonts.text};

@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { EmployeeBadge } from '../screens/EmployeeBadge';
 import { Home } from '../screens/Home';
-import { Register } from '../screens/Register';
+import { RegisterEmployee } from '../screens/RegisterEmployee';
 import theme from '../theme';
 
 const Stack = createStackNavigator();
@@ -31,7 +31,7 @@ const AppRoutes = () => {
       />
       <Stack.Screen
         name="register"
-        component={Register}
+        component={RegisterEmployee}
         options={{
           title: 'Cadastrar funcionário',
         }}
