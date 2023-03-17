@@ -161,10 +161,14 @@ const Register = () => {
     switch (field) {
       case 'name':
         if (errors[field]?.type === 'required') {
-          setError(field, {
-            type: 'required',
-            message: 'Nome é obrigatório',
-          });
+          setError(
+            field,
+            {
+              type: 'required',
+              message: 'Nome é obrigatório',
+            },
+            { shouldFocus: true }
+          );
         } else if (errors[field]?.type === 'validate') {
           setError(field, {
             type: 'validate',
@@ -277,7 +281,7 @@ const Register = () => {
             </ChangePictureButton>
           </PictureSection>
         )}
-        <ScrollView>
+        <ScrollView style={{ width: '100%' }}>
           <Form>
             <InputSection>
               <Controller
@@ -300,7 +304,7 @@ const Register = () => {
                     onChangeText={onChange}
                     value={value}
                     error={!!errors.name}
-                    onEndEditing={() => assertField('name')}
+                    onPressOut={() => assertField('name')}
                   />
                 )}
               />
@@ -417,7 +421,16 @@ const Register = () => {
                 <ButtonText>Tirar foto</ButtonText>
               </SubmitButton>
             ) : (
-              <SubmitButton onPress={handleSubmit(handleRegisterEmployee)}>
+              <SubmitButton
+                onPress={() => {
+                  assertField('name');
+                  assertField('email');
+                  assertField('phoneNumber');
+                  assertField('jobTitle');
+                  assertField('salary');
+                  handleSubmit(handleRegisterEmployee)();
+                }}
+              >
                 <ButtonText>Cadastrar</ButtonText>
               </SubmitButton>
             )}

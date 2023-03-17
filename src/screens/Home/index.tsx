@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { Plus, Search } from 'lucide-react-native';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { Alert, ScrollView } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import { DefaultScreen } from '../../components/DefaultScreen';
@@ -12,7 +12,9 @@ import { AddEmployee, Input, List, SearchBar, TextButton } from './styles';
 const Home = () => {
   const navigation = useNavigation();
 
-  const { employees, deleteEmployee } = useEmployeeContext();
+  const { employees, deleteEmployee, searchEmployee } = useEmployeeContext();
+
+  const [search, setSearch] = useState<string>('');
 
   const handleAddEmployee = useCallback(() => {
     navigation.navigate('register');
@@ -30,11 +32,20 @@ const Home = () => {
     });
   };
 
+  const employeesToShow =
+    search.length > 0 ? searchEmployee(search) : employees;
+
   return (
     <DefaultScreen>
       <SearchBar>
         <Search color={theme.colors.gray[500]} strokeWidth={1.3} />
-        <Input placeholder="Buscar pelo nome, email..." />
+        <Input
+          placeholder="Buscar pelo nome, email..."
+          value={search}
+          onChangeText={(text) => {
+            setSearch(text);
+          }}
+        />
       </SearchBar>
       <AddEmployee onPress={handleAddEmployee}>
         <Plus color={theme.colors.gray[100]} strokeWidth={1.5} />
@@ -42,7 +53,7 @@ const Home = () => {
       </AddEmployee>
       <ScrollView>
         <List>
-          {employees.map((employee) => (
+          {employeesToShow.map((employee) => (
             <EmployeeCard
               key={employee.id}
               name={employee.name}

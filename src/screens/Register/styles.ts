@@ -44,6 +44,7 @@ export const Form = styled.View`
   width: 280px;
   align-items: center;
   justify-content: center;
+  margin: auto;
   gap: 24px;
 `;
 
@@ -61,6 +62,7 @@ export const Input = styled.TextInput`
 
   padding: 12px 16px;
   font-size: 16px;
+  font-family: ${theme.fonts.text};
   position: relative;
 `;
 
@@ -72,6 +74,7 @@ export const InputMask = styled(TextInputMask)`
     props.error && `border: 2px solid ${theme.colors.red[400]};`}
   padding: 12px 16px;
   font-size: 16px;
+  font-family: ${theme.fonts.text};
   position: relative;
 `;
 
@@ -89,11 +92,13 @@ export const ButtonText = styled.Text`
   font-size: 24px;
   color: ${theme.colors.gray[100]};
   font-weight: bold;
+  font-family: ${theme.fonts.heading};
 `;
 
 export const ErrorMessage = styled.Text`
   color: ${theme.colors.red[400]};
   font-size: 16px;
+  font-family: ${theme.fonts.text};
   position: absolute;
   bottom: -20px;
   left: 8px;

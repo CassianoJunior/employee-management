@@ -22,6 +22,7 @@ interface EmployeeContextValueProps {
   addEmployee: (employee: EmployeeProps) => void;
   deleteEmployee: (id: string) => void;
   updateEmployee: (employee: EmployeeProps) => void;
+  searchEmployee: (value: string) => EmployeeProps[];
 }
 
 export const EmployeeContext = createContext<
@@ -56,7 +57,7 @@ const EmployeeContextProvider = ({
 
   useEffect(() => {
     loadEmployees();
-  });
+  }, []);
 
   const getEmployee = (id: string) => {
     return employees.find((employee) => employee.id === id);
@@ -87,12 +88,23 @@ const EmployeeContextProvider = ({
     saveEmployees(updatedEmployees);
   };
 
+  const searchEmployee = (value: string) => {
+    return employees.filter((employee) => {
+      const emailWithoutDomain = employee.email.split('@')[0];
+      return (
+        employee.name.toLowerCase().includes(value.toLowerCase()) ||
+        emailWithoutDomain.toLowerCase().includes(value.toLowerCase())
+      );
+    });
+  };
+
   const contextValue = {
     employees,
     addEmployee,
     deleteEmployee,
     updateEmployee,
     getEmployee,
+    searchEmployee,
   } as EmployeeContextValueProps;
 
   return (

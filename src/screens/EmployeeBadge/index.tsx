@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Edit, Mail, Phone, Wallet } from 'lucide-react-native';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import theme from '../../theme';
 import {
   Badge,
@@ -18,7 +18,10 @@ import {
 
 import { DefaultScreen } from '../../components/DefaultScreen';
 import { ProfilePicture } from '../../components/ProfilePicture';
-import { useEmployeeContext } from '../../contexts/EmployeeContext';
+import {
+  EmployeeProps,
+  useEmployeeContext,
+} from '../../contexts/EmployeeContext';
 
 interface EmployeeBadgeProps {
   id: string;
@@ -31,12 +34,16 @@ const EmployeeBadge = () => {
 
   const { getEmployee } = useEmployeeContext();
 
-  const employee = getEmployee(id);
+  const [employee, setEmployee] = useState<EmployeeProps | undefined>(
+    undefined
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
       title: `Crachá de ${employee?.name}`,
     });
+
+    setEmployee(getEmployee(id));
   }, []);
 
   const formatPhoneNumber = (phoneNumber?: string) => {

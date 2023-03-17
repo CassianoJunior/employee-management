@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import theme from '../../theme';
 
 export const SearchBar = styled.View`
-  display: flex;
   flex-direction: row;
   align-items: center;
   padding: 8px 16px;
@@ -21,11 +20,11 @@ export const Input = styled.TextInput.attrs({
   height: 32px;
   font-size: 16px;
   color: ${theme.colors.gray[100]};
+  font-family: ${theme.fonts.text};
   margin-left: 8px;
 `;
 
 export const AddEmployee = styled.TouchableOpacity`
-  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -41,6 +40,7 @@ export const TextButton = styled.Text`
   font-size: 16px;
   color: ${theme.colors.gray[100]};
   margin-left: 8px;
+  font-family: ${theme.fonts.text};
 `;
 
 export const List = styled.View`

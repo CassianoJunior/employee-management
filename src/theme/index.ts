@@ -24,4 +24,8 @@ export default {
       '400': '#2dd4bf',
     },
   },
+  fonts: {
+    text: 'Inter_400Regular',
+    heading: 'Inter_700Bold',
+  },
 };

@@ -41,7 +41,6 @@ export const EditIcon = styled.TouchableOpacity`
 `;
 
 export const BadgeContent = styled.View`
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -50,7 +49,6 @@ export const BadgeContent = styled.View`
 `;
 
 export const BadgeHeader = styled.View`
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
@@ -60,21 +58,21 @@ export const BadgeName = styled.Text`
   font-size: 32px;
   font-weight: bold;
   color: ${theme.colors.purple[900]};
+  font-family: ${theme.fonts.heading};
 `;
 
 export const BadgeJobTitle = styled.Text`
   color: ${theme.colors.gray[500]};
   font-size: 24px;
+  font-family: ${theme.fonts.text};
 `;
 
 export const Info = styled.View`
-  display: flex;
   flex-direction: column;
   gap: 8px;
 `;
 
 export const InfoItem = styled.View`
-  display: flex;
   flex-direction: row;
   align-items: center;
   gap: 8px;
@@ -84,4 +82,5 @@ export const InfoItem = styled.View`
 export const InfoText = styled.Text`
   font-size: 16px;
   color: ${theme.colors.purple[900]};
+  font-family: ${theme.fonts.text};
 `;
