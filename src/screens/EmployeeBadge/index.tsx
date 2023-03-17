@@ -63,10 +63,82 @@ const EmployeeBadge = () => {
     string | null | undefined
   >(undefined);
 
+  const assert = () => {
+    if (!employee) return false;
+    if (!employee.name) {
+      showMessage({
+        message: 'O nome do funcionário não pode ser vazio!',
+        type: 'danger',
+        backgroundColor: theme.colors.red[400],
+        floating: true,
+        titleStyle: {
+          textAlign: 'center',
+        },
+      });
+      return false;
+    }
+    if (!employee.email) {
+      showMessage({
+        message: 'O email do funcionário não pode ser vazio!',
+        type: 'danger',
+        backgroundColor: theme.colors.red[400],
+        floating: true,
+        titleStyle: {
+          textAlign: 'center',
+        },
+      });
+      return false;
+    }
+    if (!employee.phoneNumber) {
+      showMessage({
+        message: 'O telefone do funcionário não pode ser vazio!',
+        type: 'danger',
+        backgroundColor: theme.colors.red[400],
+        floating: true,
+        titleStyle: {
+          textAlign: 'center',
+        },
+      });
+      return false;
+    }
+    if (!employee.jobTitle) {
+      showMessage({
+        message: 'O cargo do funcionário não pode ser vazio!',
+        type: 'danger',
+        backgroundColor: theme.colors.red[400],
+        floating: true,
+        titleStyle: {
+          textAlign: 'center',
+        },
+      });
+      return false;
+    }
+    if (!employee.salary) {
+      showMessage({
+        message: 'O salário do funcionário não pode ser vazio!',
+        type: 'danger',
+        backgroundColor: theme.colors.red[400],
+        floating: true,
+        titleStyle: {
+          textAlign: 'center',
+        },
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const formatSalary = (salary: string) => {
+    return parseFloat(salary.replace(/\D/g, '')) / 100;
+  };
+
   const handleUpdateEmployee = () => {
+    if (!assert()) return;
+
     if (employee) {
       updateEmployee({
         ...employee,
+        salary: formatSalary(employee?.salary as string),
         profilePicture,
       });
       setIsEditing(false);
@@ -79,6 +151,7 @@ const EmployeeBadge = () => {
           textAlign: 'center',
         },
       });
+      navigation.goBack();
     }
   };
 
@@ -100,7 +173,7 @@ const EmployeeBadge = () => {
       setEmployee(findedEmployee);
       setProfilePicture(findedEmployee?.profilePicture);
     }
-  }, [employee]);
+  }, [employee, isEditing]);
 
   const formatPhoneNumber = (phoneNumber?: string) => {
     const phone = phoneNumber?.replace(/\D/g, '');
@@ -112,21 +185,12 @@ const EmployeeBadge = () => {
     return phoneNumber;
   };
 
-  const formatSalary = (salary: string) => {
-    return Number(salary.replace('R$', '').replace(',', '.'));
-  };
-
   return employee ? (
     <DefaultScreen style={{ width: '100%' }}>
       <ScrollView style={{ height: '90%' }}>
         <Badge>
           {isEditing && (
-            <LeftButtonIcon
-              onPress={() => {
-                setIsEditing(false);
-                handleUpdateEmployee();
-              }}
-            >
+            <LeftButtonIcon onPress={handleUpdateEmployee}>
               <CheckCircle2 color={theme.colors.purple[800]} size={24} />
             </LeftButtonIcon>
           )}
@@ -249,12 +313,10 @@ const EmployeeBadge = () => {
                       delimiter: '.',
                       unit: 'R$ ',
                     }}
-                    value={String(employee?.salary)}
+                    value={employee?.salary as string}
                     onChangeText={(text) => {
                       setEmployee((prevState) =>
-                        prevState
-                          ? { ...prevState, salary: Number(formatSalary(text)) }
-                          : undefined
+                        prevState ? { ...prevState, salary: text } : undefined
                       );
                     }}
                   />

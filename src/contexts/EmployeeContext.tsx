@@ -8,7 +8,7 @@ export type EmployeeProps = {
   email: string;
   phoneNumber: string;
   jobTitle: string;
-  salary: number;
+  salary: number | string;
   profilePicture?: string | null;
 };
 

@@ -28,7 +28,9 @@ export const InputSection = styled.View`
   position: relative;
 `;
 
-export const Input = styled.TextInput`
+export const Input = styled.TextInput.attrs({
+  placeholderTextColor: theme.colors.gray[500],
+})`
   width: 100%;
   background-color: ${theme.colors.purple[100]};
   border-radius: 8px;
@@ -41,7 +43,9 @@ export const Input = styled.TextInput`
   position: relative;
 `;
 
-export const InputMask = styled(TextInputMask)`
+export const InputMask = styled(TextInputMask).attrs({
+  placeholderTextColor: theme.colors.gray[500],
+})`
   width: 100%;
   background-color: ${theme.colors.purple[100]};
   border-radius: 8px;
