@@ -55,15 +55,20 @@ const EmployeeBadge = () => {
     undefined
   );
 
-  const [imageBase64, setImageBase64] = useState<string | null | undefined>(
-    undefined
-  );
+  const [employeeBackup, setEmployeeBackup] = useState<
+    EmployeeProps | undefined
+  >(undefined);
 
-  const [usingCamera, setUsingCamera] = useState(false);
+  const [profilePicture, setProfilePicture] = useState<
+    string | null | undefined
+  >(undefined);
 
   const handleUpdateEmployee = () => {
     if (employee) {
-      updateEmployee(employee);
+      updateEmployee({
+        ...employee,
+        profilePicture,
+      });
       setIsEditing(false);
       showMessage({
         message: 'Funcionário atualizado com sucesso!',
@@ -78,7 +83,10 @@ const EmployeeBadge = () => {
   };
 
   useLayoutEffect(() => {
-    setEmployee(getEmployee(id));
+    const findedEmployee = getEmployee(id);
+    setEmployee(findedEmployee);
+    setProfilePicture(findedEmployee?.profilePicture);
+    setEmployeeBackup(findedEmployee);
   }, []);
 
   useEffect(() => {
@@ -88,7 +96,9 @@ const EmployeeBadge = () => {
       });
     }
     if (employee && !isEditing) {
-      setEmployee(getEmployee(id));
+      const findedEmployee = getEmployee(id);
+      setEmployee(findedEmployee);
+      setProfilePicture(findedEmployee?.profilePicture);
     }
   }, [employee]);
 
@@ -102,33 +112,48 @@ const EmployeeBadge = () => {
     return phoneNumber;
   };
 
+  const formatSalary = (salary: string) => {
+    return Number(salary.replace('R$', '').replace(',', '.'));
+  };
+
   return employee ? (
     <DefaultScreen style={{ width: '100%' }}>
       <ScrollView style={{ height: '90%' }}>
         <Badge>
           {isEditing && (
-            <LeftButtonIcon onPress={handleUpdateEmployee}>
+            <LeftButtonIcon
+              onPress={() => {
+                setIsEditing(false);
+                handleUpdateEmployee();
+              }}
+            >
               <CheckCircle2 color={theme.colors.purple[800]} size={24} />
             </LeftButtonIcon>
           )}
-          <RightButtonIcon
-            onPress={() => {
-              setIsEditing((prevState) => !prevState);
-            }}
-          >
-            {isEditing ? (
+          {isEditing ? (
+            <RightButtonIcon
+              onPress={() => {
+                setIsEditing(false);
+                setEmployee(employeeBackup);
+              }}
+            >
               <XCircle color={theme.colors.purple[800]} size={24} />
-            ) : (
+            </RightButtonIcon>
+          ) : (
+            <RightButtonIcon onPress={() => setIsEditing(true)}>
               <Edit color={theme.colors.purple[800]} size={24} />
-            )}
-          </RightButtonIcon>
+            </RightButtonIcon>
+          )}
           <BadgeHole />
           <BadgeCircle />
           {isEditing ? (
-            <PicturePicker />
+            <PicturePicker
+              imageBase64={profilePicture}
+              setImageBase64={setProfilePicture}
+            />
           ) : (
             <ProfilePicture
-              source={employee?.profilePicture}
+              source={profilePicture}
               size={136}
               color={theme.colors.gray[100]}
             />
@@ -223,19 +248,18 @@ const EmployeeBadge = () => {
                       separator: ',',
                       delimiter: '.',
                       unit: 'R$ ',
-                      suffixUnit: '',
                     }}
                     value={String(employee?.salary)}
                     onChangeText={(text) => {
                       setEmployee((prevState) =>
                         prevState
-                          ? { ...prevState, salary: Number(text) }
+                          ? { ...prevState, salary: Number(formatSalary(text)) }
                           : undefined
                       );
                     }}
                   />
                 ) : (
-                  <InfoText>{`R$ ${employee?.salary.toFixed(2)}`}</InfoText>
+                  <InfoText>{`R$ ${employee?.salary}`}</InfoText>
                 )}
               </InfoItem>
             </Info>

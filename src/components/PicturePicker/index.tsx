@@ -1,17 +1,21 @@
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
-import { SwitchCamera, User } from 'lucide-react-native';
+import { ImageMinus, SwitchCamera, User } from 'lucide-react-native';
 import { useCallback, useState } from 'react';
 import { Alert } from 'react-native';
 import theme from '../../theme';
 import { OpenCamera } from '../OpenCamera';
 import { ProfilePicture } from '../ProfilePicture';
-import { ChangePictureButton, PictureSection } from './styles';
+import { LeftButton, PictureSection, RightButton } from './styles';
 
-const PicturePicker = () => {
-  const [imageBase64, setImageBase64] = useState<string | null | undefined>(
-    undefined
-  );
+interface PiturePickerProps {
+  imageBase64: string | null | undefined;
+  setImageBase64: React.Dispatch<
+    React.SetStateAction<string | null | undefined>
+  >;
+}
+
+const PicturePicker = ({ imageBase64, setImageBase64 }: PiturePickerProps) => {
   const [usingCamera, setUsingCamera] = useState(false);
 
   const getPermissions = async () => {
@@ -91,6 +95,10 @@ const PicturePicker = () => {
     );
   };
 
+  const handleRemovePicture = () => {
+    setImageBase64(null);
+  };
+
   return usingCamera ? (
     <OpenCamera
       setImageBase64={setImageBase64}
@@ -108,13 +116,16 @@ const PicturePicker = () => {
       ) : (
         <User color={theme.colors.zinc[800]} size={112} strokeWidth={1} />
       )}
-      <ChangePictureButton onPress={handleChangePicture}>
+      <RightButton onPress={handleChangePicture}>
         <SwitchCamera
           color={theme.colors.gray[100]}
           size={24}
           strokeWidth={2}
         />
-      </ChangePictureButton>
+      </RightButton>
+      <LeftButton onPress={handleRemovePicture}>
+        <ImageMinus color={theme.colors.gray[100]} size={24} strokeWidth={2} />
+      </LeftButton>
     </PictureSection>
   );
 };

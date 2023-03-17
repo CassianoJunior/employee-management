@@ -71,6 +71,8 @@ export const BadgeName = styled.Text`
 `;
 
 export const BadgeNameInput = styled.TextInput`
+  min-width: 256px;
+  text-align: center;
   font-size: 32px;
   font-weight: bold;
   color: ${theme.colors.purple[900]};
@@ -84,6 +86,8 @@ export const BadgeJobTitle = styled.Text`
 `;
 
 export const BadgeJobTitleInput = styled.TextInput`
+  min-width: 200px;
+  text-align: center;
   color: ${theme.colors.gray[500]};
   font-size: 24px;
   font-family: ${theme.fonts.text};
@@ -108,12 +112,14 @@ export const InfoText = styled.Text`
 `;
 
 export const InfoInput = styled.TextInput`
+  min-width: 156px;
   font-size: 16px;
   color: ${theme.colors.purple[900]};
   font-family: ${theme.fonts.text};
 `;
 
 export const InfoInputMask = styled(TextInputMask)`
+  min-width: 156px;
   font-size: 16px;
   color: ${theme.colors.purple[900]};
   font-family: ${theme.fonts.text};

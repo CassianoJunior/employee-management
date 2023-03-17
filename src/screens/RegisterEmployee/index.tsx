@@ -24,7 +24,7 @@ import {
   useEmployeeContext,
 } from '../../contexts/EmployeeContext';
 
-type FormData = {
+export type FormData = {
   name: string;
   email: string;
   phoneNumber: string;
@@ -36,7 +36,6 @@ const RegisterEmployee = () => {
   const [imageBase64, setImageBase64] = useState<string | undefined | null>(
     undefined
   );
-  const [usingCamera, setUsingCamera] = useState<boolean>(false);
 
   const {
     control,
@@ -153,7 +152,10 @@ const RegisterEmployee = () => {
   return (
     <DefaultScreen>
       <Container>
-        <PicturePicker />
+        <PicturePicker
+          imageBase64={imageBase64}
+          setImageBase64={setImageBase64}
+        />
         <ScrollView style={{ width: '100%' }}>
           <Form>
             <InputSection>
