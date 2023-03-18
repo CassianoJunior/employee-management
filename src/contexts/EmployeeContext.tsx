@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { generate as generateId } from 'shortid';
+import { api } from '../api';
 
 export type EmployeeProps = {
   id: string;
@@ -9,7 +9,7 @@ export type EmployeeProps = {
   phoneNumber: string;
   jobTitle: string;
   salary: number;
-  profilePicture?: string | null;
+  profilePicture?: string;
 };
 
 interface EmployeeContextProviderProps {
@@ -37,11 +37,18 @@ const EmployeeContextProvider = ({
   );
 
   const loadEmployees = async () => {
-    await AsyncStorage.getItem('@employees:employees').then((employees) => {
-      if (employees) {
-        setEmployees(JSON.parse(employees));
-      }
-    });
+    // await AsyncStorage.getItem('@employees:employees').then((employees) => {
+    //   if (employees) {
+    //     setEmployees(JSON.parse(employees));
+    //   }
+    // });
+
+    await api
+      .get('/employee')
+      .then((res) => {
+        setEmployees(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const saveEmployees = async (employees: EmployeeProps[]) => {
@@ -64,28 +71,49 @@ const EmployeeContextProvider = ({
   };
 
   const addEmployee = (employee: EmployeeProps) => {
-    const newEmployee = {
-      ...employee,
-      id: generateId(),
-    };
+    // const newEmployee = {
+    //   ...employee,
+    //   id: generateId(),
+    // };
 
-    saveEmployees([...employees, newEmployee]);
+    // saveEmployees([...employees, newEmployee]);
+
+    api
+      .post('/employee', employee)
+      .then((res) => {
+        loadEmployees();
+      })
+      .catch((err) => console.log(err));
   };
 
   const deleteEmployee = (id: string) => {
-    saveEmployees(employees.filter((employee) => employee.id !== id));
+    // saveEmployees(employees.filter((employee) => employee.id !== id));
+
+    api
+      .delete(`/employee/${id}`)
+      .then((res) => {
+        loadEmployees();
+      })
+      .catch((err) => console.log(err));
   };
 
   const updateEmployee = (employee: EmployeeProps) => {
-    const updatedEmployees = employees.map((item) => {
-      if (item.id === employee.id) {
-        return employee;
-      }
+    // const updatedEmployees = employees.map((item) => {
+    //   if (item.id === employee.id) {
+    //     return employee;
+    //   }
 
-      return item;
-    });
+    //   return item;
+    // });
 
-    saveEmployees(updatedEmployees);
+    // saveEmployees(updatedEmployees);
+
+    api
+      .put(`/employee/${employee.id}`, employee)
+      .then((res) => {
+        loadEmployees();
+      })
+      .catch((err) => console.log(err));
   };
 
   const searchEmployee = (value: string) => {

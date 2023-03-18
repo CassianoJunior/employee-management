@@ -13,26 +13,22 @@ import {
 interface OpenCameraProps {
   usingCamera: boolean;
   setUsingCamera: React.Dispatch<React.SetStateAction<boolean>>;
-  setImageBase64: React.Dispatch<
-    React.SetStateAction<string | null | undefined>
-  >;
+  setImageUri: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 const OpenCamera = ({
   usingCamera,
   setUsingCamera,
-  setImageBase64,
+  setImageUri,
 }: OpenCameraProps) => {
   const cameraRef = useRef<Camera>(null);
 
   const handleTakePicture = async () => {
     if (cameraRef.current) {
-      const photo = await cameraRef.current.takePictureAsync({
-        base64: true,
-      });
+      const photo = await cameraRef.current.takePictureAsync();
 
       if (photo) {
-        setImageBase64(`data:image/jpg;base64,${photo.base64}`);
+        setImageUri(photo.uri);
       }
     }
 

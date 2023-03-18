@@ -9,13 +9,11 @@ import { ProfilePicture } from '../ProfilePicture';
 import { LeftButton, PictureSection, RightButton } from './styles';
 
 interface PiturePickerProps {
-  imageBase64: string | null | undefined;
-  setImageBase64: React.Dispatch<
-    React.SetStateAction<string | null | undefined>
-  >;
+  imageUri: string | null | undefined;
+  setImageUri: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-const PicturePicker = ({ imageBase64, setImageBase64 }: PiturePickerProps) => {
+const PicturePicker = ({ imageUri, setImageUri }: PiturePickerProps) => {
   const [usingCamera, setUsingCamera] = useState(false);
 
   const getPermissions = async () => {
@@ -53,12 +51,11 @@ const PicturePicker = ({ imageBase64, setImageBase64 }: PiturePickerProps) => {
         aspect: [4, 3],
         quality: 1,
         allowsMultipleSelection: false,
-        base64: true,
       });
 
       if (!result.canceled) {
         if (result.assets) {
-          setImageBase64(`data:image/jpg;base64,${result.assets[0].base64}`);
+          setImageUri(result.assets[0].uri);
         }
       }
     }
@@ -96,20 +93,20 @@ const PicturePicker = ({ imageBase64, setImageBase64 }: PiturePickerProps) => {
   };
 
   const handleRemovePicture = () => {
-    setImageBase64(null);
+    setImageUri(undefined);
   };
 
   return usingCamera ? (
     <OpenCamera
-      setImageBase64={setImageBase64}
+      setImageUri={setImageUri}
       setUsingCamera={setUsingCamera}
       usingCamera={usingCamera}
     />
   ) : (
-    <PictureSection bgColor={!!imageBase64}>
-      {imageBase64 ? (
+    <PictureSection bgColor={!!imageUri}>
+      {imageUri ? (
         <ProfilePicture
-          source={imageBase64}
+          source={imageUri}
           size={128}
           color={theme.colors.purple[700]}
         />

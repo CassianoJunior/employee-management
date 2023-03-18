@@ -33,9 +33,7 @@ export type FormData = {
 };
 
 const RegisterEmployee = () => {
-  const [imageBase64, setImageBase64] = useState<string | undefined | null>(
-    undefined
-  );
+  const [imageUri, setImageUri] = useState<string | undefined>(undefined);
 
   const {
     control,
@@ -132,7 +130,7 @@ const RegisterEmployee = () => {
       jobTitle,
       phoneNumber: formatPhoneNumber(phoneNumber),
       salary: formatSalary(salary),
-      profilePicture: imageBase64 || undefined,
+      profilePicture: imageUri || undefined,
       id: '',
     };
 
@@ -152,10 +150,7 @@ const RegisterEmployee = () => {
   return (
     <DefaultScreen>
       <Container>
-        <PicturePicker
-          imageBase64={imageBase64}
-          setImageBase64={setImageBase64}
-        />
+        <PicturePicker imageUri={imageUri} setImageUri={setImageUri} />
         <ScrollView style={{ width: '100%' }}>
           <Form>
             <InputSection>

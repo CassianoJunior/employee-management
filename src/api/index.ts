@@ -1,14 +1,10 @@
 import axios from 'axios';
 
-const apiInstance = (baseUrl: string) => {
-  const instance = axios.create({
-    baseURL: baseUrl,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+const api = axios.create({
+  baseURL: 'https://employee-api-jnef.onrender.com',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
-  return instance;
-};
-
-export { apiInstance };
+export { api };

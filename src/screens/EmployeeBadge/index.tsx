@@ -59,9 +59,9 @@ const EmployeeBadge = () => {
     EmployeeProps | undefined
   >(undefined);
 
-  const [profilePicture, setProfilePicture] = useState<
-    string | null | undefined
-  >(undefined);
+  const [profilePicture, setProfilePicture] = useState<string | undefined>(
+    undefined
+  );
 
   const assert = () => {
     if (!employee) return false;
@@ -182,7 +182,7 @@ const EmployeeBadge = () => {
 
   return employee ? (
     <DefaultScreen style={{ width: '100%' }}>
-      <ScrollView style={{ height: '90%', paddingTop: 32 }}>
+      <ScrollView style={{ height: '100%', paddingTop: 32 }}>
         <Badge>
           {isEditing && (
             <LeftButtonIcon onPress={handleUpdateEmployee}>
@@ -207,8 +207,8 @@ const EmployeeBadge = () => {
           <BadgeCircle />
           {isEditing ? (
             <PicturePicker
-              imageBase64={profilePicture}
-              setImageBase64={setProfilePicture}
+              imageUri={profilePicture}
+              setImageUri={setProfilePicture}
             />
           ) : (
             <ProfilePicture
