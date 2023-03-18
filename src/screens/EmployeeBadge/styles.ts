@@ -1,5 +1,6 @@
 import { TextInputMask } from 'react-native-masked-text';
 import styled from 'styled-components/native';
+import { ThemeProps } from '../../components/DefaultScreen/styles';
 import theme from '../../theme';
 
 export const Badge = styled.View`
@@ -7,7 +8,10 @@ export const Badge = styled.View`
   justify-content: space-between;
   height: 544px;
   width: 320px;
-  background-color: ${theme.colors.purple[500]};
+  background-color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[500]
+      : theme.colors.purple[700]};
   border-radius: 16px;
   position: relative;
   overflow: hidden;
@@ -23,14 +27,20 @@ export const BadgeHole = styled.View`
   width: 60px;
   height: 12px;
   border-radius: 40px;
-  background-color: ${theme.colors.purple[700]};
+  background-color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.gunmental[500]
+      : theme.colors.gray[200]};
 `;
 
 export const BadgeCircle = styled.View`
   height: 536px;
   width: 536px;
   border-radius: 536px;
-  background-color: ${theme.colors.gray[100]};
+  background-color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.gray[100]
+      : theme.colors.zinc[900]};
   position: absolute;
   bottom: -268px; // 536 / 2
 `;
@@ -66,7 +76,10 @@ export const BadgeHeader = styled.View`
 export const BadgeName = styled.Text`
   font-size: 32px;
   font-weight: bold;
-  color: ${theme.colors.purple[900]};
+  color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[900]
+      : theme.colors.gray[100]};
   font-family: ${theme.fonts.heading};
 `;
 
@@ -75,7 +88,10 @@ export const BadgeNameInput = styled.TextInput`
   text-align: center;
   font-size: 32px;
   font-weight: bold;
-  color: ${theme.colors.purple[900]};
+  color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[900]
+      : theme.colors.gray[100]};
   font-family: ${theme.fonts.heading};
 `;
 
@@ -107,20 +123,29 @@ export const InfoItem = styled.View`
 
 export const InfoText = styled.Text`
   font-size: 16px;
-  color: ${theme.colors.purple[900]};
+  color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[900]
+      : theme.colors.gray[100]};
   font-family: ${theme.fonts.text};
 `;
 
 export const InfoInput = styled.TextInput`
   min-width: 156px;
   font-size: 16px;
-  color: ${theme.colors.purple[900]};
+  color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[900]
+      : theme.colors.gray[100]};
   font-family: ${theme.fonts.text};
 `;
 
 export const InfoInputMask = styled(TextInputMask)`
   min-width: 156px;
   font-size: 16px;
-  color: ${theme.colors.purple[900]};
+  color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[900]
+      : theme.colors.gray[100]};
   font-family: ${theme.fonts.text};
 `;

@@ -6,7 +6,8 @@ import { showMessage } from 'react-native-flash-message';
 import { DefaultScreen } from '../../components/DefaultScreen';
 import { EmployeeCard } from '../../components/EmployeeCard';
 import { useEmployeeContext } from '../../contexts/EmployeeContext';
-import theme from '../../theme';
+import { useThemeContext } from '../../contexts/ThemeContext';
+import appTheme from '../../theme';
 import { AddEmployee, Input, List, SearchBar, TextButton } from './styles';
 
 const Home = () => {
@@ -35,10 +36,12 @@ const Home = () => {
   const employeesToShow =
     search.length > 0 ? searchEmployee(search) : employees;
 
+  const { theme } = useThemeContext();
+
   return (
     <DefaultScreen>
       <SearchBar>
-        <Search color={theme.colors.gray[500]} strokeWidth={1.3} />
+        <Search color={appTheme.colors.gray[500]} strokeWidth={1.3} />
         <Input
           placeholder="Buscar pelo nome, email..."
           value={search}
@@ -48,8 +51,15 @@ const Home = () => {
         />
       </SearchBar>
       <AddEmployee onPress={handleAddEmployee}>
-        <Plus color={theme.colors.gray[100]} strokeWidth={1.5} />
-        <TextButton>Adicionar funcionário</TextButton>
+        <Plus
+          color={
+            theme === 'dark'
+              ? appTheme.colors.gray[100]
+              : appTheme.colors.zinc[800]
+          }
+          strokeWidth={1.5}
+        />
+        <TextButton themeType={theme}>Adicionar funcionário</TextButton>
       </AddEmployee>
       <ScrollView>
         <List>

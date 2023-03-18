@@ -5,10 +5,9 @@ import {
 } from '@expo-google-fonts/inter';
 import FlashMessage from 'react-native-flash-message';
 import { Provider as ReactNativePaperProvider } from 'react-native-paper';
-import { ThemeProvider } from 'styled-components/native';
 import { EmployeeContextProvider } from './src/contexts/EmployeeContext';
+import { ThemeContextProvider } from './src/contexts/ThemeContext';
 import { Routes } from './src/routes';
-import theme from './src/theme';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -21,13 +20,13 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeContextProvider>
       <ReactNativePaperProvider>
         <EmployeeContextProvider>
           <Routes />
           <FlashMessage position="bottom" />
         </EmployeeContextProvider>
       </ReactNativePaperProvider>
-    </ThemeProvider>
+    </ThemeContextProvider>
   );
 }

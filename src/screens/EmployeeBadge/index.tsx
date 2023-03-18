@@ -9,7 +9,7 @@ import {
 } from 'lucide-react-native';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
-import theme from '../../theme';
+import appTheme from '../../theme';
 import {
   Badge,
   BadgeCircle,
@@ -38,6 +38,7 @@ import {
   EmployeeProps,
   useEmployeeContext,
 } from '../../contexts/EmployeeContext';
+import { useThemeContext } from '../../contexts/ThemeContext';
 
 interface EmployeeBadgeProps {
   id: string;
@@ -69,7 +70,7 @@ const EmployeeBadge = () => {
       showMessage({
         message: 'O nome do funcionário não pode ser vazio!',
         type: 'danger',
-        backgroundColor: theme.colors.red[400],
+        backgroundColor: appTheme.colors.red[400],
         floating: true,
         titleStyle: {
           textAlign: 'center',
@@ -81,7 +82,7 @@ const EmployeeBadge = () => {
       showMessage({
         message: 'O email do funcionário não pode ser vazio!',
         type: 'danger',
-        backgroundColor: theme.colors.red[400],
+        backgroundColor: appTheme.colors.red[400],
         floating: true,
         titleStyle: {
           textAlign: 'center',
@@ -93,7 +94,7 @@ const EmployeeBadge = () => {
       showMessage({
         message: 'O telefone do funcionário não pode ser vazio!',
         type: 'danger',
-        backgroundColor: theme.colors.red[400],
+        backgroundColor: appTheme.colors.red[400],
         floating: true,
         titleStyle: {
           textAlign: 'center',
@@ -105,7 +106,7 @@ const EmployeeBadge = () => {
       showMessage({
         message: 'O cargo do funcionário não pode ser vazio!',
         type: 'danger',
-        backgroundColor: theme.colors.red[400],
+        backgroundColor: appTheme.colors.red[400],
         floating: true,
         titleStyle: {
           textAlign: 'center',
@@ -117,7 +118,7 @@ const EmployeeBadge = () => {
       showMessage({
         message: 'O salário do funcionário não pode ser vazio!',
         type: 'danger',
-        backgroundColor: theme.colors.red[400],
+        backgroundColor: appTheme.colors.red[400],
         floating: true,
         titleStyle: {
           textAlign: 'center',
@@ -140,7 +141,7 @@ const EmployeeBadge = () => {
       showMessage({
         message: 'Funcionário atualizado com sucesso!',
         type: 'success',
-        backgroundColor: theme.colors.teal[400],
+        backgroundColor: appTheme.colors.teal[400],
         floating: true,
         titleStyle: {
           textAlign: 'center',
@@ -180,13 +181,15 @@ const EmployeeBadge = () => {
     return parseFloat(salary.replace(/\D/g, '')) / 100;
   };
 
+  const { theme } = useThemeContext();
+
   return employee ? (
     <DefaultScreen style={{ width: '100%' }}>
       <ScrollView style={{ height: '100%', paddingTop: 32 }}>
-        <Badge>
+        <Badge themeType={theme}>
           {isEditing && (
             <LeftButtonIcon onPress={handleUpdateEmployee}>
-              <CheckCircle2 color={theme.colors.purple[800]} size={24} />
+              <CheckCircle2 color={appTheme.colors.gray[100]} size={24} />
             </LeftButtonIcon>
           )}
           {isEditing ? (
@@ -196,15 +199,15 @@ const EmployeeBadge = () => {
                 setEmployee(employeeBackup);
               }}
             >
-              <XCircle color={theme.colors.purple[800]} size={24} />
+              <XCircle color={appTheme.colors.gray[100]} size={24} />
             </RightButtonIcon>
           ) : (
             <RightButtonIcon onPress={() => setIsEditing(true)}>
-              <Edit color={theme.colors.purple[800]} size={24} />
+              <Edit color={appTheme.colors.gray[100]} size={24} />
             </RightButtonIcon>
           )}
-          <BadgeHole />
-          <BadgeCircle />
+          <BadgeHole themeType={theme} />
+          <BadgeCircle themeType={theme} />
           {isEditing ? (
             <PicturePicker
               imageUri={profilePicture}
@@ -214,13 +217,14 @@ const EmployeeBadge = () => {
             <ProfilePicture
               source={profilePicture}
               size={136}
-              color={theme.colors.gray[100]}
+              color={appTheme.colors.gray[100]}
             />
           )}
           <BadgeContent>
             <BadgeHeader>
               {isEditing ? (
                 <BadgeNameInput
+                  themeType={theme}
                   value={employee?.name}
                   onChangeText={(text) => {
                     setEmployee((prevState) =>
@@ -229,7 +233,7 @@ const EmployeeBadge = () => {
                   }}
                 />
               ) : (
-                <BadgeName>{employee?.name}</BadgeName>
+                <BadgeName themeType={theme}>{employee?.name}</BadgeName>
               )}
               {isEditing ? (
                 <BadgeJobTitleInput
@@ -247,12 +251,13 @@ const EmployeeBadge = () => {
             <Info>
               <InfoItem>
                 <Mail
-                  color={theme.colors.gray[500]}
+                  color={appTheme.colors.gray[500]}
                   size={24}
                   strokeWidth={2}
                 />
                 {isEditing ? (
                   <InfoInput
+                    themeType={theme}
                     value={employee?.email}
                     onChangeText={(text) => {
                       setEmployee((prevState) =>
@@ -261,17 +266,18 @@ const EmployeeBadge = () => {
                     }}
                   />
                 ) : (
-                  <InfoText>{employee?.email}</InfoText>
+                  <InfoText themeType={theme}>{employee?.email}</InfoText>
                 )}
               </InfoItem>
               <InfoItem>
                 <Phone
-                  color={theme.colors.gray[500]}
+                  color={appTheme.colors.gray[500]}
                   size={24}
                   strokeWidth={2}
                 />
                 {isEditing ? (
                   <InfoInputMask
+                    themeType={theme}
                     type="cel-phone"
                     options={{
                       maskType: 'BRL',
@@ -288,19 +294,20 @@ const EmployeeBadge = () => {
                     }}
                   />
                 ) : (
-                  <InfoText>
+                  <InfoText themeType={theme}>
                     {formatPhoneNumber(employee?.phoneNumber)}
                   </InfoText>
                 )}
               </InfoItem>
               <InfoItem>
                 <Wallet
-                  color={theme.colors.gray[500]}
+                  color={appTheme.colors.gray[500]}
                   size={24}
                   strokeWidth={2}
                 />
                 {isEditing ? (
                   <InfoInputMask
+                    themeType={theme}
                     type="money"
                     options={{
                       precision: 2,
@@ -318,7 +325,9 @@ const EmployeeBadge = () => {
                     }}
                   />
                 ) : (
-                  <InfoText>{`R$ ${employee?.salary.toFixed(2)}`}</InfoText>
+                  <InfoText themeType={theme}>{`R$ ${employee?.salary.toFixed(
+                    2
+                  )}`}</InfoText>
                 )}
               </InfoItem>
             </Info>

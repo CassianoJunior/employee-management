@@ -1,11 +1,15 @@
 import Animated from 'react-native-reanimated';
 import styled from 'styled-components/native';
 import theme from '../../theme';
+import { ThemeProps } from '../DefaultScreen/styles';
 
 export const Container = styled(Animated.View)`
   width: 48%;
   height: 176px;
-  background-color: ${theme.colors.purple[500]};
+  background-color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[500]
+      : theme.colors.purple[700]};
   padding: 24px 12px;
   border-radius: 8px;
   margin: 8px 0;

@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
 import theme from '../../theme';
+import { ThemeProps } from '../DefaultScreen/styles';
 
-interface PictureSectionProps {
+interface PictureSectionProps extends ThemeProps {
   bgColor: boolean;
 }
 
@@ -10,8 +11,12 @@ export const PictureSection = styled.View`
   height: 132px;
   align-items: center;
   justify-content: center;
-  background-color: ${({ bgColor }: PictureSectionProps) =>
-    !bgColor ? theme.colors.purple[100] : 'transparent'};
+  background-color: ${({ bgColor, themeType }: PictureSectionProps) =>
+    !bgColor
+      ? themeType === 'dark'
+        ? theme.colors.purple[100]
+        : theme.colors.zinc[800]
+      : 'transparent'};
   border-radius: 132px;
   position: relative;
 `;

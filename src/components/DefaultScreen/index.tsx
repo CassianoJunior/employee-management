@@ -7,6 +7,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import { useThemeContext } from '../../contexts/ThemeContext';
 
 // Styled-Component
 import { Container } from './styles';
@@ -17,8 +18,10 @@ interface ScreenComponentProps {
 }
 
 const DefaultScreen = ({ children, style }: ScreenComponentProps) => {
+  const { theme } = useThemeContext();
+
   return (
-    <Container style={style}>
+    <Container style={style} themeType={theme}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >

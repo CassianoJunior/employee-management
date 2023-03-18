@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import z from 'zod';
 import { DefaultScreen } from '../../components/DefaultScreen';
-import theme from '../../theme';
+import appTheme from '../../theme';
 import {
   ButtonText,
   Container,
@@ -23,6 +23,7 @@ import {
   EmployeeProps,
   useEmployeeContext,
 } from '../../contexts/EmployeeContext';
+import { useThemeContext } from '../../contexts/ThemeContext';
 
 export type FormData = {
   name: string;
@@ -114,7 +115,7 @@ const RegisterEmployee = () => {
   };
 
   const formatSalary = (salary: string) => {
-    return Number(salary.replace('R$', '').replace(',', '.'));
+    return parseFloat(salary.replace(/\D/g, '')) / 100;
   };
 
   const handleRegisterEmployee = ({
@@ -130,7 +131,7 @@ const RegisterEmployee = () => {
       jobTitle,
       phoneNumber: formatPhoneNumber(phoneNumber),
       salary: formatSalary(salary),
-      profilePicture: imageUri || undefined,
+      profilePicture: imageUri || '',
       id: '',
     };
 
@@ -139,13 +140,15 @@ const RegisterEmployee = () => {
     showMessage({
       message: 'Funcionário cadastrado com sucesso!',
       type: 'success',
-      backgroundColor: theme.colors.teal[400],
+      backgroundColor: appTheme.colors.teal[400],
       floating: true,
       titleStyle: {
         textAlign: 'center',
       },
     });
   };
+
+  const { theme } = useThemeContext();
 
   return (
     <DefaultScreen>
@@ -170,6 +173,7 @@ const RegisterEmployee = () => {
                 name="name"
                 render={({ field: { onChange, value } }) => (
                   <Input
+                    themeType={theme}
                     placeholder="Nome"
                     onChangeText={onChange}
                     value={value}
@@ -197,6 +201,7 @@ const RegisterEmployee = () => {
                 name="email"
                 render={({ field: { onChange, value } }) => (
                   <Input
+                    themeType={theme}
                     placeholder="Email"
                     onChangeText={onChange}
                     value={value}
@@ -226,6 +231,7 @@ const RegisterEmployee = () => {
                 name="phoneNumber"
                 render={({ field: { onChange, value } }) => (
                   <InputMask
+                    themeType={theme}
                     placeholder="Telefone"
                     type="cel-phone"
                     options={{
@@ -250,6 +256,7 @@ const RegisterEmployee = () => {
                 name="jobTitle"
                 render={({ field: { onChange, value } }) => (
                   <Input
+                    themeType={theme}
                     placeholder="Cargo"
                     onChangeText={onChange}
                     value={value}
@@ -267,6 +274,7 @@ const RegisterEmployee = () => {
                 name="salary"
                 render={({ field: { onChange, value } }) => (
                   <InputMask
+                    themeType={theme}
                     placeholder="Salário"
                     onChangeText={onChange}
                     value={value}
@@ -287,6 +295,7 @@ const RegisterEmployee = () => {
             </InputSection>
 
             <SubmitButton
+              themeType={theme}
               onPress={() => {
                 assertField('name');
                 assertField('email');

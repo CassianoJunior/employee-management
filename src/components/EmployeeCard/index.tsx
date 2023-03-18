@@ -1,6 +1,7 @@
 import { TouchableOpacityProps } from 'react-native';
 import { FadeIn, FadeOut, Layout } from 'react-native-reanimated';
-import theme from '../../theme';
+import { useThemeContext } from '../../contexts/ThemeContext';
+import appTheme from '../../theme';
 import { ProfilePicture } from '../ProfilePicture';
 import { Container, Email, Info, Name, TouchableArea } from './styles';
 
@@ -16,17 +17,22 @@ const EmployeeCard = ({
   profilePicture,
   ...rest
 }: EmployeeCardProps) => {
+  const { theme } = useThemeContext();
+
   return (
     <Container
       layout={Layout}
       entering={FadeIn.duration(500)}
       exiting={FadeOut.duration(500)}
+      themeType={theme}
     >
       <TouchableArea {...rest}>
         <ProfilePicture
           source={profilePicture}
           size={68}
-          color={theme.colors.gray[100]}
+          color={
+            theme === 'dark' ? appTheme.colors.gray[100] : appTheme.colors.brand
+          }
         />
         <Info>
           <Name>{name}</Name>

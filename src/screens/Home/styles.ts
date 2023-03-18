@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { ThemeProps } from '../../components/DefaultScreen/styles';
 import theme from '../../theme';
 
 export const SearchBar = styled.View`
@@ -38,7 +39,10 @@ export const AddEmployee = styled.TouchableOpacity`
 
 export const TextButton = styled.Text`
   font-size: 16px;
-  color: ${theme.colors.gray[100]};
+  color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.gray[100]
+      : theme.colors.zinc[800]};
   margin-left: 8px;
   font-family: ${theme.fonts.text};
 `;

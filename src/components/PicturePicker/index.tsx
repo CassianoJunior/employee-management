@@ -1,9 +1,10 @@
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
-import { ImageMinus, SwitchCamera, User } from 'lucide-react-native';
+import { ImageMinus, SwitchCamera } from 'lucide-react-native';
 import { useCallback, useState } from 'react';
 import { Alert } from 'react-native';
-import theme from '../../theme';
+import { useThemeContext } from '../../contexts/ThemeContext';
+import appTheme from '../../theme';
 import { OpenCamera } from '../OpenCamera';
 import { ProfilePicture } from '../ProfilePicture';
 import { LeftButton, PictureSection, RightButton } from './styles';
@@ -96,6 +97,8 @@ const PicturePicker = ({ imageUri, setImageUri }: PiturePickerProps) => {
     setImageUri(undefined);
   };
 
+  const { theme } = useThemeContext();
+
   return usingCamera ? (
     <OpenCamera
       setImageUri={setImageUri}
@@ -103,25 +106,33 @@ const PicturePicker = ({ imageUri, setImageUri }: PiturePickerProps) => {
       usingCamera={usingCamera}
     />
   ) : (
-    <PictureSection bgColor={!!imageUri}>
-      {imageUri ? (
-        <ProfilePicture
-          source={imageUri}
-          size={128}
-          color={theme.colors.purple[700]}
-        />
-      ) : (
-        <User color={theme.colors.zinc[800]} size={112} strokeWidth={1} />
-      )}
+    <PictureSection bgColor={!!imageUri} themeType={theme}>
+      <ProfilePicture
+        source={imageUri}
+        size={128}
+        color={appTheme.colors.purple[700]}
+      />
       <RightButton onPress={handleChangePicture}>
         <SwitchCamera
-          color={theme.colors.gray[100]}
+          color={
+            theme === 'dark'
+              ? appTheme.colors.gray[100]
+              : appTheme.colors.zinc[800]
+          }
           size={24}
           strokeWidth={2}
         />
       </RightButton>
       <LeftButton onPress={handleRemovePicture}>
-        <ImageMinus color={theme.colors.gray[100]} size={24} strokeWidth={2} />
+        <ImageMinus
+          color={
+            theme === 'dark'
+              ? appTheme.colors.gray[100]
+              : appTheme.colors.zinc[800]
+          }
+          size={24}
+          strokeWidth={2}
+        />
       </LeftButton>
     </PictureSection>
   );

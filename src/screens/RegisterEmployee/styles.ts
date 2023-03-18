@@ -1,8 +1,9 @@
 import { TextInputMask } from 'react-native-masked-text';
 import styled from 'styled-components/native';
+import { ThemeProps } from '../../components/DefaultScreen/styles';
 import theme from '../../theme';
 
-interface InputProps {
+interface InputProps extends ThemeProps {
   error: boolean;
 }
 
@@ -29,29 +30,50 @@ export const InputSection = styled.View`
   position: relative;
 `;
 
-export const Input = styled.TextInput.attrs({
-  placeholderTextColor: theme.colors.gray[500],
-})`
+export const Input = styled.TextInput.attrs((props: InputProps) => ({
+  placeholderTextColor:
+    props.themeType === 'dark'
+      ? theme.colors.gray[500]
+      : theme.colors.gray[100],
+}))`
   width: 100%;
-  background-color: ${theme.colors.purple[100]};
+  background-color: ${(props: InputProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[100]
+      : theme.colors.zinc[800]};
   border-radius: 8px;
   ${(props: InputProps) =>
     props.error && `border: 2px solid ${theme.colors.red[400]};`}
 
+  color: ${(props: InputProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.zinc[800]
+      : theme.colors.gray[100]};
   padding: 12px 16px;
   font-size: 16px;
   font-family: ${theme.fonts.text};
   position: relative;
 `;
 
-export const InputMask = styled(TextInputMask).attrs({
-  placeholderTextColor: theme.colors.gray[500],
-})`
+export const InputMask = styled(TextInputMask).attrs((props: InputProps) => ({
+  placeholderTextColor:
+    props.themeType === 'dark'
+      ? theme.colors.gray[500]
+      : theme.colors.gray[100],
+}))`
   width: 100%;
-  background-color: ${theme.colors.purple[100]};
+  background-color: ${(props: InputProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[100]
+      : theme.colors.zinc[800]};
   border-radius: 8px;
   ${(props: InputProps) =>
     props.error && `border: 2px solid ${theme.colors.red[400]};`}
+
+  color: ${(props: InputProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.zinc[800]
+      : theme.colors.gray[100]};
   padding: 12px 16px;
   font-size: 16px;
   font-family: ${theme.fonts.text};
@@ -62,7 +84,10 @@ export const SubmitButton = styled.TouchableOpacity`
   width: 100%;
   align-items: center;
   justify-content: center;
-  background-color: ${theme.colors.purple[500]};
+  background-color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[500]
+      : theme.colors.purple[700]};
   border-radius: 8px;
   padding: 12px 16px;
   margin-top: 32px;

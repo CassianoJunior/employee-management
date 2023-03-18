@@ -79,7 +79,10 @@ const EmployeeContextProvider = ({
     // saveEmployees([...employees, newEmployee]);
 
     api
-      .post('/employee', employee)
+      .post('/employee', {
+        ...employee,
+        profilePicture: employee.profilePicture || '',
+      })
       .then((res) => {
         loadEmployees();
       })

@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import theme from '../../theme';
+import { ThemeProps } from '../DefaultScreen/styles';
 
 interface ImageSectionProps {
   size?: number;
@@ -9,7 +10,7 @@ interface ImageProps {
   size?: number;
   source: { uri: string };
 }
-interface WithoutImageProps {
+interface WithoutImageProps extends ThemeProps {
   size?: number;
   color?: string;
 }
@@ -35,7 +36,11 @@ export const WithoutImage = styled.View`
   width: ${({ size = 50 }: WithoutImageProps) => size}px;
   height: ${({ size = 50 }: WithoutImageProps) => size}px;
   border-radius: ${({ size = 50 }: WithoutImageProps) => size}px;
-  border: 2px solid ${theme.colors.gray[300]};
+  border: 2px solid
+    ${(props: WithoutImageProps) =>
+      props.themeType === 'dark'
+        ? theme.colors.purple[100]
+        : theme.colors.zinc[800]};
   align-items: center;
   justify-content: center;
 `;
