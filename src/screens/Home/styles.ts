@@ -9,7 +9,7 @@ export const SearchBar = styled.View`
   border: 1px solid ${theme.colors.gray[500]};
   border-radius: 50px;
   width: 80%;
-  margin: auto;
+  margin: 16px auto 0;
   height: 40px;
 `;
 

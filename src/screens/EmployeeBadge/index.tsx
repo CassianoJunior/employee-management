@@ -128,17 +128,12 @@ const EmployeeBadge = () => {
     return true;
   };
 
-  const formatSalary = (salary: string) => {
-    return parseFloat(salary.replace(/\D/g, '')) / 100;
-  };
-
   const handleUpdateEmployee = () => {
     if (!assert()) return;
 
     if (employee) {
       updateEmployee({
         ...employee,
-        salary: formatSalary(employee?.salary as string),
         profilePicture,
       });
       setIsEditing(false);
@@ -151,6 +146,7 @@ const EmployeeBadge = () => {
           textAlign: 'center',
         },
       });
+
       navigation.goBack();
     }
   };
@@ -168,12 +164,7 @@ const EmployeeBadge = () => {
         title: `Crachá de ${employee?.name}`,
       });
     }
-    if (employee && !isEditing) {
-      const findedEmployee = getEmployee(id);
-      setEmployee(findedEmployee);
-      setProfilePicture(findedEmployee?.profilePicture);
-    }
-  }, [employee, isEditing]);
+  }, [employee]);
 
   const formatPhoneNumber = (phoneNumber?: string) => {
     const phone = phoneNumber?.replace(/\D/g, '');
@@ -185,9 +176,13 @@ const EmployeeBadge = () => {
     return phoneNumber;
   };
 
+  const formatSalary = (salary: string) => {
+    return parseFloat(salary.replace(/\D/g, '')) / 100;
+  };
+
   return employee ? (
     <DefaultScreen style={{ width: '100%' }}>
-      <ScrollView style={{ height: '90%' }}>
+      <ScrollView style={{ height: '90%', paddingTop: 32 }}>
         <Badge>
           {isEditing && (
             <LeftButtonIcon onPress={handleUpdateEmployee}>
@@ -313,15 +308,17 @@ const EmployeeBadge = () => {
                       delimiter: '.',
                       unit: 'R$ ',
                     }}
-                    value={employee?.salary as string}
+                    value={employee?.salary.toFixed(2).toString()}
                     onChangeText={(text) => {
                       setEmployee((prevState) =>
-                        prevState ? { ...prevState, salary: text } : undefined
+                        prevState
+                          ? { ...prevState, salary: formatSalary(text) }
+                          : undefined
                       );
                     }}
                   />
                 ) : (
-                  <InfoText>{`R$ ${employee?.salary}`}</InfoText>
+                  <InfoText>{`R$ ${employee?.salary.toFixed(2)}`}</InfoText>
                 )}
               </InfoItem>
             </Info>
