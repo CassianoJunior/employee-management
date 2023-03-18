@@ -7,8 +7,8 @@
 <p align="center">A simple app to manage a company's employees</p>
 <p align="center">
   <a href="https://github.com/CassianoJunior"><img src="https://img.shields.io/badge/created%20by-CassianoJunior-4BBAAB" alt="Creator badge" /></a>
-  <a href="https://github.com/CassianoJunior"><img src="https://img.shields.io/badge/api%20status-running-2dd4bf" alt="Creator badge" /></a>
-  <a href="https://github.com/CassianoJunior"><img src="https://img.shields.io/badge/api%20deadline-June 15, 2023-f87171" alt="Creator badge" /></a>
+  <a href="https://employee-api-jnef.onrender.com"><img src="https://img.shields.io/badge/api%20status-running-2dd4bf" alt="api link badge" /></a>
+  <img src="https://img.shields.io/badge/api%20deadline-June 15, 2023-f87171" alt="API Deadline badge" />
 </p>
 
 ## Table of contents
@@ -40,6 +40,7 @@
 - Delete employee
 - Update employee
 - Search employee by name or email
+- Context API
 - Profile image select
 - Toggle white/dark theme
 
