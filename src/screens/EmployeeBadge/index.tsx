@@ -1,7 +1,9 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {
+  CalendarCheck2,
   CheckCircle2,
   Edit,
+  Fingerprint,
   Mail,
   Phone,
   Wallet,
@@ -23,13 +25,16 @@ import {
   Info,
   InfoInput,
   InfoInputMask,
+  InfoInputMaskDate,
   InfoItem,
   InfoText,
   LeftButtonIcon,
   RightButtonIcon,
 } from './styles';
 
+import moment from 'moment';
 import { showMessage } from 'react-native-flash-message';
+import { Masks } from 'react-native-mask-input';
 import { DefaultScreen } from '../../components/DefaultScreen';
 import { Loading } from '../../components/Loading';
 import { PicturePicker } from '../../components/PicturePicker';
@@ -63,6 +68,8 @@ const EmployeeBadge = () => {
   const [profilePicture, setProfilePicture] = useState<string | undefined>(
     undefined
   );
+
+  const [date, setDate] = useState<string | undefined>(undefined);
 
   const assert = () => {
     if (!employee) return false;
@@ -136,6 +143,8 @@ const EmployeeBadge = () => {
       updateEmployee({
         ...employee,
         profilePicture,
+        cpf: employee.cpf?.replace(/\D/g, ''),
+        hiringDate: new Date(moment(date, 'DD/MM/YYYY').format()),
       });
       setIsEditing(false);
       showMessage({
@@ -157,6 +166,7 @@ const EmployeeBadge = () => {
     setEmployee(findedEmployee);
     setProfilePicture(findedEmployee?.profilePicture);
     setEmployeeBackup(findedEmployee);
+    setDate(moment(findedEmployee?.hiringDate).format('DD/MM/YYYY'));
   }, []);
 
   useEffect(() => {
@@ -177,6 +187,15 @@ const EmployeeBadge = () => {
     return phoneNumber;
   };
 
+  const formatCpf = (cpf: string) => {
+    const match = cpf?.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
+    if (match) {
+      return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
+    }
+
+    return cpf;
+  };
+
   const formatSalary = (salary: string) => {
     return parseFloat(salary.replace(/\D/g, '')) / 100;
   };
@@ -191,7 +210,7 @@ const EmployeeBadge = () => {
           paddingTop: 32,
         }}
       >
-        <Badge themeType={theme} style={{ marginBottom: isEditing ? 108 : 0 }}>
+        <Badge themeType={theme} style={{ marginBottom: isEditing ? 128 : 0 }}>
           {isEditing && (
             <LeftButtonIcon onPress={handleUpdateEmployee}>
               <CheckCircle2 color={appTheme.colors.gray[100]} size={24} />
@@ -275,6 +294,29 @@ const EmployeeBadge = () => {
                 )}
               </InfoItem>
               <InfoItem>
+                <Fingerprint
+                  color={appTheme.colors.gray[500]}
+                  size={24}
+                  strokeWidth={2}
+                />
+                {isEditing ? (
+                  <InfoInputMask
+                    type="cpf"
+                    themeType={theme}
+                    value={employee?.cpf}
+                    onChangeText={(text) => {
+                      setEmployee((prevState) =>
+                        prevState ? { ...prevState, cpf: text } : undefined
+                      );
+                    }}
+                  />
+                ) : (
+                  <InfoText themeType={theme}>
+                    {formatCpf(employee?.cpf)}
+                  </InfoText>
+                )}
+              </InfoItem>
+              <InfoItem>
                 <Phone
                   color={appTheme.colors.gray[500]}
                   size={24}
@@ -333,6 +375,27 @@ const EmployeeBadge = () => {
                   <InfoText themeType={theme}>{`R$ ${employee?.salary.toFixed(
                     2
                   )}`}</InfoText>
+                )}
+              </InfoItem>
+              <InfoItem>
+                <CalendarCheck2
+                  color={appTheme.colors.gray[500]}
+                  size={24}
+                  strokeWidth={2}
+                />
+                {isEditing ? (
+                  <InfoInputMaskDate
+                    themeType={theme}
+                    mask={Masks.DATE_DDMMYYYY}
+                    value={date}
+                    onChangeText={(text) => {
+                      setDate(text);
+                    }}
+                  />
+                ) : (
+                  <InfoText themeType={theme}>
+                    {moment(employee.hiringDate).format('DD/MM/YYYY')}
+                  </InfoText>
                 )}
               </InfoItem>
             </Info>

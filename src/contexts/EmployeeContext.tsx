@@ -9,6 +9,8 @@ export type EmployeeProps = {
   phoneNumber: string;
   jobTitle: string;
   salary: number;
+  cpf: string;
+  hiringDate: Date;
   profilePicture?: string;
 };
 
@@ -86,7 +88,7 @@ const EmployeeContextProvider = ({
       .then((res) => {
         loadEmployees();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response));
   };
 
   const deleteEmployee = (id: string) => {

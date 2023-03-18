@@ -1,3 +1,4 @@
+import MaskInput from 'react-native-mask-input';
 import { TextInputMask } from 'react-native-masked-text';
 import styled from 'styled-components/native';
 import { ThemeProps } from '../../components/DefaultScreen/styles';
@@ -63,14 +64,14 @@ export const BadgeContent = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  gap: 12px;
   padding: 32px 0;
 `;
 
 export const BadgeHeader = styled.View`
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 export const BadgeName = styled.Text`
@@ -84,7 +85,6 @@ export const BadgeName = styled.Text`
 `;
 
 export const BadgeNameInput = styled.TextInput`
-  min-width: 256px;
   text-align: center;
   font-size: 32px;
   font-weight: bold;
@@ -102,7 +102,6 @@ export const BadgeJobTitle = styled.Text`
 `;
 
 export const BadgeJobTitleInput = styled.TextInput`
-  min-width: 200px;
   text-align: center;
   color: ${theme.colors.gray[500]};
   font-size: 24px;
@@ -111,7 +110,7 @@ export const BadgeJobTitleInput = styled.TextInput`
 
 export const Info = styled.View`
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 `;
 
 export const InfoItem = styled.View`
@@ -131,8 +130,8 @@ export const InfoText = styled.Text`
 `;
 
 export const InfoInput = styled.TextInput`
-  min-width: 156px;
   font-size: 16px;
+  height: 24px;
   color: ${(props: ThemeProps) =>
     props.themeType === 'dark'
       ? theme.colors.purple[900]
@@ -141,8 +140,18 @@ export const InfoInput = styled.TextInput`
 `;
 
 export const InfoInputMask = styled(TextInputMask)`
-  min-width: 156px;
   font-size: 16px;
+  height: 24px;
+  color: ${(props: ThemeProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[900]
+      : theme.colors.gray[100]};
+  font-family: ${theme.fonts.text};
+`;
+
+export const InfoInputMaskDate = styled(MaskInput)`
+  font-size: 16px;
+  height: 24px;
   color: ${(props: ThemeProps) =>
     props.themeType === 'dark'
       ? theme.colors.purple[900]

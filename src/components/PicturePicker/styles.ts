@@ -23,7 +23,7 @@ export const PictureSection = styled.View`
 
 export const RightButton = styled.TouchableOpacity`
   position: absolute;
-  bottom: -8px;
+  bottom: -12px;
   right: -8px;
   width: 32px;
   height: 32px;
@@ -33,7 +33,7 @@ export const RightButton = styled.TouchableOpacity`
 
 export const LeftButton = styled.TouchableOpacity`
   position: absolute;
-  bottom: -8px;
+  bottom: -12px;
   left: -8px;
   width: 32px;
   height: 32px;

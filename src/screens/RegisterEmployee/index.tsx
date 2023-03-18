@@ -11,6 +11,7 @@ import {
   Input,
   InputMask,
   InputSection,
+  MaskInputDate,
   SubmitButton,
 } from './styles';
 
@@ -25,12 +26,17 @@ import {
 } from '../../contexts/EmployeeContext';
 import { useThemeContext } from '../../contexts/ThemeContext';
 
+import moment from 'moment';
+import { Masks } from 'react-native-mask-input';
+
 export type FormData = {
   name: string;
   email: string;
   phoneNumber: string;
   jobTitle: string;
   salary: string;
+  cpf: string;
+  hiringDate: string;
 };
 
 const RegisterEmployee = () => {
@@ -107,6 +113,32 @@ const RegisterEmployee = () => {
           });
         }
         break;
+      case 'cpf':
+        if (errors[field]?.type === 'required') {
+          setError(field, {
+            type: 'required',
+            message: 'CPF é obrigatório',
+          });
+        } else if (errors[field]?.type === 'validate') {
+          setError(field, {
+            type: 'validate',
+            message: 'CPF inválido',
+          });
+        }
+        break;
+      case 'hiringDate':
+        if (errors[field]?.type === 'required') {
+          setError(field, {
+            type: 'required',
+            message: 'Data de contratação é obrigatório',
+          });
+        } else if (errors[field]?.type === 'validate') {
+          setError(field, {
+            type: 'validate',
+            message: 'Data de contratação inválida',
+          });
+        }
+        break;
     }
   };
 
@@ -124,11 +156,15 @@ const RegisterEmployee = () => {
     jobTitle,
     phoneNumber,
     salary,
+    cpf,
+    hiringDate,
   }: FormData) => {
     const employee: EmployeeProps = {
       name,
       email,
       jobTitle,
+      cpf: cpf.replace(/\D/g, ''),
+      hiringDate: new Date(moment(hiringDate, 'DD/MM/YYYY').format()),
       phoneNumber: formatPhoneNumber(phoneNumber),
       salary: formatSalary(salary),
       profilePicture: imageUri || '',
@@ -183,6 +219,35 @@ const RegisterEmployee = () => {
                 )}
               />
               {<ErrorMessage>{errors.name?.message}</ErrorMessage>}
+            </InputSection>
+            <InputSection>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                  validate: (value) => {
+                    try {
+                      z.string().min(9).parse(value);
+                      return true;
+                    } catch (error) {
+                      return false;
+                    }
+                  },
+                }}
+                name="cpf"
+                render={({ field: { onChange, value } }) => (
+                  <InputMask
+                    themeType={theme}
+                    placeholder="Cpf"
+                    type="cpf"
+                    onChangeText={onChange}
+                    value={value}
+                    error={!!errors.cpf}
+                    onPressOut={() => assertField('cpf')}
+                  />
+                )}
+              />
+              {<ErrorMessage>{errors.cpf?.message}</ErrorMessage>}
             </InputSection>
             <InputSection>
               <Controller
@@ -293,6 +358,40 @@ const RegisterEmployee = () => {
               />
               {<ErrorMessage>{errors.salary?.message}</ErrorMessage>}
             </InputSection>
+            <InputSection>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                  validate: (value) => {
+                    try {
+                      z.string().min(10).parse(value);
+                      const date = new Date(
+                        moment(value, 'DD/MM/YYYY').format()
+                      );
+                      z.date().min(new Date(1990, 1, 1)).parse(date);
+                      return true;
+                    } catch (error) {
+                      return false;
+                    }
+                  },
+                }}
+                name="hiringDate"
+                render={({ field: { onChange, value } }) => (
+                  <MaskInputDate
+                    themeType={theme}
+                    placeholder="Data de contratação"
+                    onChangeText={onChange}
+                    value={value}
+                    mask={Masks.DATE_DDMMYYYY}
+                    keyboardType="numeric"
+                    error={!!errors.hiringDate}
+                    onPressIn={() => assertField('hiringDate')}
+                  />
+                )}
+              />
+              {<ErrorMessage>{errors.hiringDate?.message}</ErrorMessage>}
+            </InputSection>
 
             <SubmitButton
               themeType={theme}
@@ -302,6 +401,8 @@ const RegisterEmployee = () => {
                 assertField('phoneNumber');
                 assertField('jobTitle');
                 assertField('salary');
+                assertField('cpf');
+                assertField('hiringDate');
                 handleSubmit(handleRegisterEmployee)();
               }}
             >

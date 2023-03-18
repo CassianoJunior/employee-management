@@ -1,3 +1,4 @@
+import MaskInput from 'react-native-mask-input';
 import { TextInputMask } from 'react-native-masked-text';
 import styled from 'styled-components/native';
 import { ThemeProps } from '../../components/DefaultScreen/styles';
@@ -49,7 +50,32 @@ export const Input = styled.TextInput.attrs((props: InputProps) => ({
     props.themeType === 'dark'
       ? theme.colors.zinc[800]
       : theme.colors.gray[100]};
-  padding: 12px 16px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-family: ${theme.fonts.text};
+  position: relative;
+`;
+
+export const MaskInputDate = styled(MaskInput).attrs((props: InputProps) => ({
+  placeholderTextColor:
+    props.themeType === 'dark'
+      ? theme.colors.gray[500]
+      : theme.colors.gray[100],
+}))`
+  width: 100%;
+  background-color: ${(props: InputProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.purple[100]
+      : theme.colors.zinc[800]};
+  border-radius: 8px;
+  ${(props: InputProps) =>
+    props.error && `border: 2px solid ${theme.colors.red[400]};`}
+
+  color: ${(props: InputProps) =>
+    props.themeType === 'dark'
+      ? theme.colors.zinc[800]
+      : theme.colors.gray[100]};
+  padding: 8px 16px;
   font-size: 16px;
   font-family: ${theme.fonts.text};
   position: relative;
@@ -74,7 +100,7 @@ export const InputMask = styled(TextInputMask).attrs((props: InputProps) => ({
     props.themeType === 'dark'
       ? theme.colors.zinc[800]
       : theme.colors.gray[100]};
-  padding: 12px 16px;
+  padding: 8px 16px;
   font-size: 16px;
   font-family: ${theme.fonts.text};
   position: relative;
@@ -89,7 +115,7 @@ export const SubmitButton = styled.TouchableOpacity`
       ? theme.colors.purple[500]
       : theme.colors.purple[700]};
   border-radius: 8px;
-  padding: 12px 16px;
+  padding: 8px 16px;
   margin-top: 32px;
 `;
 
