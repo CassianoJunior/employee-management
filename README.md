@@ -17,6 +17,7 @@
 - [Preview](#preview)
 - [Demo video](#demo-video)
 - [Features](#features)
+- [Api](#api)
 - [Installation](#installation)
 - [Stack](#stack)
 - [Project structure](#project-structure)
@@ -28,6 +29,7 @@
 ### Preview
 
 ![Preview gif](https://gist.githubusercontent.com/CassianoJunior/753f20be94de37b85c3262d723cefe88/raw/7f4b68560612f8cf4cdbba876a035b648d569699/preview-employee-management.gif)
+
 ### Demo video
 
 [Open youtube](https://youtu.be/GiRL1TdyUv0)
@@ -41,6 +43,9 @@
 - Profile image select
 - Toggle white/dark theme
 
+### Api
+
+The API repository is available [here](https://github.com/CassianoJunior/employee-api)
 ### Installation
 
 #### Requirements
