@@ -32,7 +32,7 @@
 
 ### Demo video
 
-[Open youtube](https://youtu.be/GiRL1TdyUv0)
+[Open youtube](https://youtu.be/AUgQbdEAZT8)
 
 ### Features
 
@@ -91,8 +91,7 @@ On your device, scan the QR code that appears on the terminal, on ios just open 
 - [React Native Reamimated](https://docs.expo.dev/versions/latest/sdk/reanimated/) - React native reanimated provides an API that greatly simplifies the process of creating smooth, powerful, and maintainable animations.
 - [Styled Components](styled-components.com) - Visual primitives for the component age
 - [Zod](https://github.com/colinhacks/zod) - TypeScript-first schema validation with static type inference
-- [Moment](https://momentjs.com) - Parse, validate, manipulate,
-and display dates and times in JavaScript.
+- [Moment](https://momentjs.com) - Parse, validate, manipulate, and display dates and times in JavaScript.
 - [Axios](https://axios-http.com) - Promise based HTTP client for the browser and node.js
 
 ### Project structure

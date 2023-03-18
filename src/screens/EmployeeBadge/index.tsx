@@ -133,6 +133,33 @@ const EmployeeBadge = () => {
       });
       return false;
     }
+
+    if (!employee.cpf) {
+      showMessage({
+        message: 'O CPF do funcionário não pode ser vazio!',
+        type: 'danger',
+        backgroundColor: appTheme.colors.red[400],
+        floating: true,
+        titleStyle: {
+          textAlign: 'center',
+        },
+      });
+      return false;
+    }
+
+    if (!date) {
+      showMessage({
+        message: 'A data de contratação do funcionário não pode ser vazia!',
+        type: 'danger',
+        backgroundColor: appTheme.colors.red[400],
+        floating: true,
+        titleStyle: {
+          textAlign: 'center',
+        },
+      });
+      return false;
+    }
+
     return true;
   };
 
