@@ -185,8 +185,13 @@ const EmployeeBadge = () => {
 
   return employee ? (
     <DefaultScreen style={{ width: '100%' }}>
-      <ScrollView style={{ height: '100%', paddingTop: 32 }}>
-        <Badge themeType={theme}>
+      <ScrollView
+        style={{
+          height: '100%',
+          paddingTop: 32,
+        }}
+      >
+        <Badge themeType={theme} style={{ marginBottom: isEditing ? 108 : 0 }}>
           {isEditing && (
             <LeftButtonIcon onPress={handleUpdateEmployee}>
               <CheckCircle2 color={appTheme.colors.gray[100]} size={24} />

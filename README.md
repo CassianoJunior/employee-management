@@ -27,7 +27,10 @@
 
 ### Preview
 
+![Preview gif](https://gist.githubusercontent.com/CassianoJunior/753f20be94de37b85c3262d723cefe88/raw/7f4b68560612f8cf4cdbba876a035b648d569699/preview-employee-management.gif)
 ### Demo video
+
+[Open youtube](https://youtu.be/GiRL1TdyUv0)
 
 ### Features
 
