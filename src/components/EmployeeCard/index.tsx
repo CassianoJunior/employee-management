@@ -31,7 +31,9 @@ const EmployeeCard = ({
           source={profilePicture}
           size={68}
           color={
-            theme === 'dark' ? appTheme.colors.gray[100] : appTheme.colors.brand
+            theme === 'dark'
+              ? appTheme.colors.zinc[800]
+              : appTheme.colors.gray[100]
           }
         />
         <Info>

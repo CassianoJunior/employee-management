@@ -20,7 +20,9 @@ const ProfilePicture = ({ source, size, color }: ProfilePictureProps) => {
     <WithoutImage size={size} color={color} themeType={theme}>
       <User
         color={
-          theme === 'dark'
+          color
+            ? color
+            : theme === 'dark'
             ? appTheme.colors.zinc[800]
             : appTheme.colors.gray[100]
         }

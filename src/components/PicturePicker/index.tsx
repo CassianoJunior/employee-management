@@ -110,7 +110,11 @@ const PicturePicker = ({ imageUri, setImageUri }: PiturePickerProps) => {
       <ProfilePicture
         source={imageUri}
         size={128}
-        color={appTheme.colors.purple[700]}
+        color={
+          theme === 'dark'
+            ? appTheme.colors.zinc[800]
+            : appTheme.colors.gray[100]
+        }
       />
       <RightButton onPress={handleChangePicture}>
         <SwitchCamera
