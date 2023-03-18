@@ -40,6 +40,7 @@
 - Delete employee
 - Update employee
 - Search employee by name or email
+- Context API
 - Profile image select
 - Toggle white/dark theme
 
