@@ -7,7 +7,7 @@
 <p align="center">A simple app to manage a company's employees</p>
 <p align="center">
   <a href="https://github.com/CassianoJunior"><img src="https://img.shields.io/badge/created%20by-CassianoJunior-4BBAAB" alt="Creator badge" /></a>
-  <a href="https://github.com/CassianoJunior"><img src="https://img.shields.io/badge/api%20status-running-2dd4bf" alt="Creator badge" /></a>
+  <a href="https://employee-api-gx8v.onrender.com"><img src="https://img.shields.io/badge/api%20status-running-2dd4bf" alt="Creator badge" /></a>
   <a href="https://github.com/CassianoJunior"><img src="https://img.shields.io/badge/api%20deadline-June 15, 2023-f87171" alt="Creator badge" /></a>
 </p>
 
@@ -46,6 +46,7 @@
 ### Api
 
 The API repository is available [here](https://github.com/CassianoJunior/employee-api)
+
 ### Installation
 
 #### Requirements
